@@ -5,6 +5,7 @@ static void	init_minishell(int argc, char **argv, char **envp);
 int	main(int argc, char **argv, char **envp)
 {
 	init_minishell(argc, argv, envp);
+	readline(PROMPT);
 	return (0);
 }
 

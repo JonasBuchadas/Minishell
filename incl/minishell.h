@@ -15,6 +15,8 @@
 
 # include "libft.h"
 # include <sys/wait.h>
+# include <readline/readline.h>
+# include <readline/history.h>
 # include <errno.h>
 # include <unistd.h>
 # include <fcntl.h>
@@ -28,6 +30,8 @@
 # define ERROR -1
 # define PIPE 2
 # define HERE_DOC 3
+
+# define PROMPT "minishell: "
 
 typedef struct s_minishell
 {

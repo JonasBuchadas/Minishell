@@ -30,10 +30,17 @@ OBJS_BONUS=	$(addprefix $(OBJS_PATH), $(OBJ_BONUS) $(OBJS))
 
 ### LIBFT ###
 LIBFTMAKE=  make bonus --silent -C $(LIBFT_PATH)
-LIBFT=      -L$(LIBFT_PATH) -lft
+
+### LINKS ###
+LINKS=      -L$(LIBFT_PATH) -lft -L$(READLINE_DIR) -lreadline
 
 ### INCLUDES ###
-INC=		-I $(LIBFT_PATH)$(INCL_PATH) -I $(INCL_PATH)
+ifeq ($(OS), Linux)
+	READLINE_DIR	=	/usr/include/readline
+else
+	READLINE_DIR	=	~/.brew/opt/readline/lib
+endif
+INC=		-I $(LIBFT_PATH)$(INCL_PATH) -I $(INCL_PATH) -I $(READLINE_DIR)
 
 ### COLOURS ###
 ifeq ($(OS), Linux)
@@ -57,12 +64,12 @@ all: $(NAME)
 
 bonus: $(OBJS_PATH) $(OBJS_BONUS)
 	@$(LIBFTMAKE)
-	@$(CC) $(CFLAGS) $(OBJS_BONUS) $(INC) $(LIBFT) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS_BONUS) $(INC) $(LINKS) -o $(NAME)
 	@$(GREEN)$(NAME) Program created$(DEFAULT)
 
 $(NAME): $(OBJS_PATH) $(OBJS_NAME)
 	@$(LIBFTMAKE)
-	@$(CC) $(CFLAGS) $(OBJS_NAME) $(INC) $(LIBFT) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS_NAME) $(INC) $(LINKS) -o $(NAME)
 	@$(GREEN)$(NAME) Program created$(DEFAULT)
 
 $(OBJS_PATH):
