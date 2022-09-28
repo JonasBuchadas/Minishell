@@ -38,6 +38,7 @@ typedef struct s_minishell
 	int		argc;
 	char	**argv;
 	char	**envp;
+	char	*input;
 }			t_minishell;
 
 #endif

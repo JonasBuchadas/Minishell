@@ -4,22 +4,21 @@ static void	init_minishell(int argc, char **argv, char **envp);
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	*input;
-
 	init_minishell(argc, argv, envp);
-	while (1)
+	while (true)
 	{
-		input = readline(PROMPT);
-		if (ft_strequal(input, "exit"))
+		ms()->input = readline(PROMPT);
+		if (ft_strequal(ms()->input, "exit"))
 			break ;
-		if (input && *input)
-			add_history(input);
-		if (ft_strequal(input, "clear"))
+		if (ms()->input && *ms()->input)
+			add_history(ms()->input);
+		if (ft_strequal(ms()->input, "clear"))
 			rl_clear_history();
 		else
-			printf("Input is: %s\n", input);
+			printf("Input is: %s\n", ms()->input);
+		ft_strdel(&ms()->input);
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 static void	init_minishell(int argc, char **argv, char **envp)
