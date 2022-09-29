@@ -35,12 +35,17 @@
 
 typedef struct s_minishell
 {
-	int		argc;
-	char	**argv;
+	pid_t	pid_cmd;
+	char	**cmd_args;
+	char	*cmd;
 	char	**envp;
+	char	**env_paths;
 	char	*input;
 }			t_minishell;
 
 #endif
 
 t_minishell *ms(void);
+
+void command_errors(char *errname, bool stop);
+void program_errors(char *errname, bool stop);

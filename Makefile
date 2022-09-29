@@ -17,7 +17,8 @@ OBJS_PATH=	objs/
 ### SOURCE FILES ###
 SRC_NAME=	$(NAME).c
 SRC_BONUS=	$(NAME)_bonus.c
-SRCS=		structs.c
+SRCS=		structs.c \
+			error_handling.c
 SRCS_NAME=	$(addprefix $(SRCS_PATH), $(SRC_NAME) $(SRCS))
 SRCS_BONUS=	$(addprefix $(SRCS_PATH), $(SRC_BONUS) $(SRCS))
 
