@@ -33,15 +33,27 @@
 
 # define PROMPT "minishell: "
 
+typedef struct s_token
+{
+	bool		single_quotes;
+	bool		double_quotes;
+	char		*text;
+}	t_token;
+
 typedef struct s_minishell
 {
 	pid_t	pid_cmd;
-	char	**cmd_args;
-	char	*cmd;
-	char	**envp;
-	char	**env_paths;
-	char	*input;
+	char		**cmd_args;
+	char		*cmd;
+	char		**envp;
+	char		**env_paths;
+	char		*input;
+	t_list		*tokens;
+	unsigned int	last_index;
 }			t_minishell;
+
+
+
 
 #endif
 
@@ -49,3 +61,4 @@ t_minishell *ms(void);
 
 void command_errors(char *errname, bool stop);
 void program_errors(char *errname, bool stop);
+void parse_tokens(void);

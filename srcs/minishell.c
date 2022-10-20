@@ -14,6 +14,8 @@ int	main(int argc, char **argv, char **envp)
 	while (true)
 	{
 		ms()->input = readline(PROMPT);
+		if (!(ms()->input))
+			exit(1);
 		if (ft_strequal(ms()->input, "exit"))
 			break ;
 		if (ms()->input && *ms()->input)
@@ -21,10 +23,15 @@ int	main(int argc, char **argv, char **envp)
 		if (ft_strequal(ms()->input, "clear"))
 			rl_clear_history();
 		else
+		{
+			parse_tokens();
+			// printf("%s\n",ms()->tokens);
 			exec_input();
+		}
 		waitpid(-1, NULL, 0);
 		ft_strdel(&ms()->input);
 	}
+	ft_strdel(&ms()->input);
 	return (EXIT_SUCCESS);
 }
 
