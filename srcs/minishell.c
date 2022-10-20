@@ -31,7 +31,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		waitpid(-1, NULL, 0);
 		ft_strdel(&ms()->input);
-		// ft_lstclear(&ms()->tokens, &del_token);
+		ft_lstclear(&ms()->tokens, &del_token);
 	}
 	ft_strdel(&ms()->input);
 	// ft_lstclear(&ms()->tokens, &del_token);

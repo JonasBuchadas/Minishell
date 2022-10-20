@@ -23,6 +23,11 @@
 # include <stdio.h>
 # include <stdlib.h>
 
+// Parse Codes
+# define NORMAL 0
+# define SINGLE_QUOTES 1
+# define DOUBLE_QUOTES 2
+
 # define WRITE_END 1
 # define READ_END 0
 # define NO_INPUT_FILE 0
@@ -35,8 +40,7 @@
 
 typedef struct s_token
 {
-	bool		single_quotes;
-	bool		double_quotes;
+	int			parse_code;
 	char		*text;
 }	t_token;
 
@@ -49,7 +53,7 @@ typedef struct s_minishell
 	char		**env_paths;
 	char		*input;
 	t_list		*tokens;
-	unsigned int	last_index;
+	unsigned int	last_i;
 }			t_minishell;
 
 

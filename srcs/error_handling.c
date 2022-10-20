@@ -35,6 +35,8 @@ void	print_token(void *elem)
 {
 	t_token	*token;
 
+	if (!elem)
+		return ;
 	token = (t_token*)elem;
 	printf("Token :%s\n", token->text);
 }
