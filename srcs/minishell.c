@@ -24,14 +24,17 @@ int	main(int argc, char **argv, char **envp)
 			rl_clear_history();
 		else
 		{
-			parse_tokens();
+			create_tokens();
 			// printf("%s\n",ms()->tokens);
+			ft_lstiter(ms()->tokens, print_token);
 			exec_input();
 		}
 		waitpid(-1, NULL, 0);
 		ft_strdel(&ms()->input);
+		// ft_lstclear(&ms()->tokens, &del_token);
 	}
 	ft_strdel(&ms()->input);
+	// ft_lstclear(&ms()->tokens, &del_token);
 	return (EXIT_SUCCESS);
 }
 

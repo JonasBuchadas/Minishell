@@ -59,6 +59,8 @@ typedef struct s_minishell
 
 t_minishell *ms(void);
 
-void command_errors(char *errname, bool stop);
-void program_errors(char *errname, bool stop);
-void parse_tokens(void);
+void	command_errors(char *errname, bool stop);
+void	program_errors(char *errname, bool stop);
+void	create_tokens(void);
+void	del_token(void *token);
+void	print_token(void *token);

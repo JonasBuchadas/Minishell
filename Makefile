@@ -6,7 +6,7 @@ NAME=		minishell
 
 ### COMPILATION ###
 CC=			gcc
-CFLAGS=		-Wall -Werror -Wextra
+CFLAGS=		-Wall -Werror -Wextra -g
 
 ### PATHS ###
 LIBFT_PATH=	./libft/
