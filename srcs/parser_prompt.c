@@ -67,10 +67,11 @@ static int	handle_single_quotes(int i)
 //Handle space has to create a token with the lenght of last token index and the current index
 static int	handle_space(int i)
 {
-	size_t	len;
+	size_t			len;
+	// unsigned int	space_len;
 
 	len = i - ms()->last_i;
-	if (i != 0 || len != 0)
+	if (len > 0)
 	// {
 	// 	while (input[ms()->last_i] == ' ')
 	// 		ms()->last_i++;
@@ -81,10 +82,15 @@ static int	handle_space(int i)
 	// 	ms()->last_i += (int)len;
 	// }
 	{
+		// space_len = 0;
+		// while (ms()->input[ms()->last_i + space_len] == ' ')
+		// 	space_len++;
 		add_token(ms()->last_i, len, NORMAL);
+		ms()->last_i += len + 1;
 	}
-	ms()->last_i += len + 1;
-	return i + len + 1;
+	else
+		ms()->last_i++;
+	return i;
 }
 
 static void add_token(unsigned int start, int len, int parse_code)
