@@ -26,7 +26,7 @@ void	del_token(void *elem)
 {
 	t_token	*token;
 
-	token = (t_token*)elem;
+	token = (t_token *)elem;
 	ft_strdel(&token->text);
 	ft_memdel(&elem);
 }
@@ -37,6 +37,6 @@ void	print_token(void *elem)
 
 	if (!elem)
 		return ;
-	token = (t_token*)elem;
+	token = (t_token *)elem;
 	printf("Token :%s\n", token->text);
 }

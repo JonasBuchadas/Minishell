@@ -3,10 +3,10 @@
 static int	handle_double_quotes(int i);
 static int	handle_single_quotes(int i);
 static int	handle_space(int i);
-static void add_token(unsigned int start, int len, int parse_code);
+static void	add_token(unsigned int start, int len, int parse_code);
 
 // Will travel the input and create tokens within "", '' or [space]
-void create_tokens(void)
+void	create_tokens(void)
 {
 	int			i;
 
@@ -16,9 +16,9 @@ void create_tokens(void)
 	{
 		if (ms()->input[i] == '\"')
 			i = handle_double_quotes(i);
-		else if (ms()->input[i] == '\'')
+		if (ms()->input[i] == '\'')
 			i = handle_single_quotes(i);
-		else if (ms()->input[i] == ' ')
+		if (ms()->input[i] == ' ')
 			i = handle_space(i);
 		if (!(ms()->input[i] == '\"' || ms()->input[i] == '\''))
 			i++;
@@ -39,15 +39,15 @@ static int	handle_double_quotes(int i)
 		{
 			if (len > 0)
 				add_token(start, len, DOUBLE_QUOTES);
-			if(ms()->input[i + 1] && ms()->input[i + 1] != ' ')
+			if (ms()->input[i + 1] && ms()->input[i + 1] != ' ')
 				ms()->last_i = ++i;
 			else
 				ms()->last_i = ++i + 1;
-			return i;
+			return (i);
 		}
 		len++;
 	}
-	return start;
+	return (start);
 }
 
 static int	handle_single_quotes(int i)
@@ -67,17 +67,18 @@ static int	handle_single_quotes(int i)
 				ms()->last_i = ++i;
 			else
 				ms()->last_i = ++i + 1;
-			return i;
+			return (i);
 		}
 		len++;
 	}
-	return start;
+	return (start);
 }
 
-//Handle space has to create a token with the lenght of last token index and the current index
+//Handle space has to create a token with the lenght
+//of last token index and the current index
 static int	handle_space(int i)
 {
-	size_t			len;
+	size_t	len;
 
 	len = i - ms()->last_i;
 	if (len > 0)
@@ -87,12 +88,12 @@ static int	handle_space(int i)
 	}
 	else
 		ms()->last_i++;
-	return i;
+	return (i);
 }
 
-static void add_token(unsigned int start, int len, int parse_code)
+static void	add_token(unsigned int start, int len, int parse_code)
 {
-	t_token *token;
+	t_token	*token;
 
 	token = ft_calloc(1, sizeof(t_token));
 	// TODO: Malloc protection
