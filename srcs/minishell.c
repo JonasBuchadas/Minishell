@@ -25,7 +25,7 @@ int	main(int argc, char **argv, char **envp)
 		else
 		{
 			create_tokens();
-			// printf("%s\n",ms()->tokens);
+			expand_tokens();
 			ft_lstiter(ms()->tokens, print_token);
 			// exec_input();
 		}
@@ -33,9 +33,9 @@ int	main(int argc, char **argv, char **envp)
 		ft_strdel(&ms()->input);
 		ft_lstclear(&ms()->tokens, &del_token);
 	}
+	rl_clear_history();
 	ft_strdel(&ms()->input);
 	ft_lstclear(&ms()->tokens, &del_token);
-	// ft_lstclear(&ms()->tokens, &del_token);
 	return (EXIT_SUCCESS);
 }
 

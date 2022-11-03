@@ -66,5 +66,8 @@ t_minishell *ms(void);
 void	command_errors(char *errname, bool stop);
 void	program_errors(char *errname, bool stop);
 void	create_tokens(void);
+void	expand_tokens(void);
 void	del_token(void *token);
+void	del_token_list(void *elem);
 void	print_token(void *token);
+void	*expand_token(void *elem);

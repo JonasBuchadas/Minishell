@@ -31,6 +31,11 @@ void	del_token(void *elem)
 	ft_memdel(&elem);
 }
 
+void del_token_list(void *elem)
+{
+	ft_memdel(&elem);
+}
+
 void	print_token(void *elem)
 {
 	t_token	*token;
