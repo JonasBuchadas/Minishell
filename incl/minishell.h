@@ -23,6 +23,11 @@
 # include <stdio.h>
 # include <stdlib.h>
 
+// Parse Codes
+# define NORMAL 0
+# define SINGLE_QUOTES 1
+# define DOUBLE_QUOTES 2
+
 # define WRITE_END 1
 # define READ_END 0
 # define NO_INPUT_FILE 0
@@ -33,19 +38,36 @@
 
 # define PROMPT "minishell: "
 
+typedef struct s_token
+{
+	int			parse_code;
+	char		*text;
+}	t_token;
+
 typedef struct s_minishell
 {
 	pid_t	pid_cmd;
-	char	**cmd_args;
-	char	*cmd;
-	char	**envp;
-	char	**env_paths;
-	char	*input;
+	char		**cmd_args;
+	char		*cmd;
+	char		**envp;
+	char		**env_paths;
+	char		*input;
+	t_list		*tokens;
+	unsigned int	last_i;
 }			t_minishell;
+
+
+
 
 #endif
 
 t_minishell *ms(void);
 
-void command_errors(char *errname, bool stop);
-void program_errors(char *errname, bool stop);
+void	command_errors(char *errname, bool stop);
+void	program_errors(char *errname, bool stop);
+void	create_tokens(void);
+void	expand_tokens(void);
+void	del_token(void *token);
+void	del_token_list(void *elem);
+void	print_token(void *token);
+void	*expand_token(void *elem);

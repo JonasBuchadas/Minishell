@@ -6,7 +6,7 @@ NAME=		minishell
 
 ### COMPILATION ###
 CC=			gcc
-CFLAGS=		-Wall -Werror -Wextra
+CFLAGS=		-Wall -Werror -Wextra -g
 
 ### PATHS ###
 LIBFT_PATH=	./libft/
@@ -18,6 +18,8 @@ OBJS_PATH=	objs/
 SRC_NAME=	$(NAME).c
 SRC_BONUS=	$(NAME)_bonus.c
 SRCS=		structs.c \
+			create_tokens.c \
+			expand_tokens.c \
 			error_handling.c
 SRCS_NAME=	$(addprefix $(SRCS_PATH), $(SRC_NAME) $(SRCS))
 SRCS_BONUS=	$(addprefix $(SRCS_PATH), $(SRC_BONUS) $(SRCS))
