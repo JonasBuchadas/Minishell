@@ -27,6 +27,7 @@
 # define NORMAL 0
 # define SINGLE_QUOTES 1
 # define DOUBLE_QUOTES 2
+# define METACHAR 3
 
 # define WRITE_END 1
 # define READ_END 0
@@ -44,6 +45,13 @@ typedef struct s_token
 	char		*text;
 }	t_token;
 
+typedef struct s_command
+{
+	char	**command;
+	int		in;
+	int		out;
+}	t_command;
+
 typedef struct s_minishell
 {
 	pid_t	pid_cmd;
@@ -53,21 +61,21 @@ typedef struct s_minishell
 	char		**env_paths;
 	char		*input;
 	t_list		*tokens;
+	t_list		*commands;
 	unsigned int	last_i;
 }			t_minishell;
 
-
-
-
-#endif
-
 t_minishell *ms(void);
 
-void	command_errors(char *errname, bool stop);
-void	program_errors(char *errname, bool stop);
-void	create_tokens(void);
-void	expand_tokens(void);
-void	del_token(void *token);
-void	del_token_list(void *elem);
-void	print_token(void *token);
-void	*expand_token(void *elem);
+void command_errors(char *errname, bool stop);
+void program_errors(char *errname, bool stop);
+void create_tokens(void);
+void expand_tokens(void);
+void del_token(void *token);
+void del_token_list(void *elem);
+void print_token(void *token);
+void *expand_token(void *elem);
+void create_commands();
+bool is_metachar(char c);
+
+#endif
