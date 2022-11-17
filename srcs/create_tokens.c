@@ -3,7 +3,7 @@
 static int	handle_double_quotes(int i);
 static int	handle_single_quotes(int i);
 static int	handle_metachar(int i);
-static void	add_token(unsigned int start, int len, int parse_code);
+static void add_token(unsigned int start, int len, int parse_code);
 
 // Will travel the input and create tokens within "", '' or [space]
 void create_tokens(void)
@@ -86,7 +86,14 @@ static int handle_metachar(int i)
 		add_token(ms()->last_i, len, NORMAL);
 		ms()->last_i += len;
 	}
-	if (ms()->input[i] != ' ')
+	if ((ms()->input[i] == '<' && ms()->input[i + 1] == '<')
+		|| (ms()->input[i] == '>' && ms()->input[i + 1] == '>'))
+	{
+		add_token(ms()->last_i, 2, METACHAR);
+		ms()->last_i = ms()->last_i + 2;
+		return (++i);
+	}
+	if (ms()->input[i] && ms()->input[i] != ' ')
 	{
 		add_token(ms()->last_i, 1, METACHAR);
 		ms()->last_i++;
@@ -94,18 +101,22 @@ static int handle_metachar(int i)
 	return (i);
 }
 
-static void	add_token(unsigned int start, int len, int parse_code)
+static void add_token(unsigned int start, int len, int parse_code)
 {
-	t_token	*token;
+	t_token *token;
+	char *text;
 
-	token = ft_calloc(1, sizeof(t_token));
-	// TODO: Malloc protection
-	token->parse_code = parse_code;
-	token->text = ft_substr(ms()->input, start, len);
-	if (parse_code == NORMAL)
-		token->text = ft_strtrim(token->text, " ");
-	if (ft_strequal(token->text, ""))
+	text = ft_substr(ms()->input, start, len);
+	if (ft_strequal(text, " "))
+	{
+		ft_strdel(&text);
 		return ;
+	}
+	token = ft_calloc(1, sizeof(t_token));
+	if (!token)
+		program_errors("MALLOC", true, true);
+	token->parse_code = parse_code;
+	token->text = text;
 	if (!ms()->tokens)
 		ms()->tokens = ft_lstnew((void *)token);
 	else

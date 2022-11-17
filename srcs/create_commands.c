@@ -40,7 +40,8 @@ static char *add_metachar(char *cmd, char *meta_str)
 	char	*meta;
 	char	*new_cmd;
 
-	add_command(cmd);
+	if (!ft_strequal(cmd, ""))
+		add_command(cmd);
 	ft_strdel(&cmd);
 	meta = (char *)ft_calloc(1, 1);
 	if (!meta)
