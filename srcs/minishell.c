@@ -31,12 +31,9 @@ int	main(int argc, char **argv, char **envp)
 			exec_input();
 		}
 		waitpid(-1, NULL, 0);
-		ft_strdel(&ms()->input);
-		ft_lstclear(&ms()->tokens, &del_token);
+		clear_data(false);
 	}
-	rl_clear_history();
-	ft_strdel(&ms()->input);
-	ft_lstclear(&ms()->tokens, &del_token);
+	clear_data(true);
 	return (EXIT_SUCCESS);
 }
 
@@ -61,18 +58,21 @@ static void command_paths(void)
 
 static void	exec_input(void)
 {
+	t_command	*command;
+
+	command = (t_command *)ms()->commands->content;
 	ms()->pid_cmd = fork();
 	if (ms()->pid_cmd == ERROR)
-		program_errors("FORK", true);
+		program_errors("FORK", true, true);
 	if (ms()->pid_cmd == CHILD_PROCESS)
 	{
-		ms()->cmd_args = ft_split(ms()->input, ' ');
-		if (access(ms()->cmd_args[0], F_OK) != ERROR)
-			execve(ms()->cmd_args[0], ms()->cmd_args, ms()->envp);
-		ms()->cmd = find_command(ms()->cmd_args[0], ms()->env_paths);
+		// ms()->cmd_args = ft_split(ms()->input, ' ');
+		if (access(command->command[0], F_OK) != ERROR)
+			execve(command->command[0], command->command, ms()->envp);
+		ms()->cmd = find_command(command->command[0], ms()->env_paths);
 		if (!ms()->cmd || access(ms()->cmd, F_OK) == ERROR)
-			command_errors(ms()->cmd_args[0], true);
-		execve(ms()->cmd, ms()->cmd_args, ms()->envp);
+			command_errors(command->command[0], true, true);
+		execve(ms()->cmd, command->command, ms()->envp);
 	}
 }
 

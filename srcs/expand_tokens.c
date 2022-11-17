@@ -9,9 +9,8 @@ void	expand_tokens(void)
 	t_list *tokens;
 
 	tokens = ft_lstmap(ms()->tokens, &expand_token, &del_token);
-	//TODO: Return error and exit minishell
 	if (!tokens)
-		return ;
+		program_errors("MALLOC", true, true);
 	ft_lstclear(&ms()->tokens, del_token_list);
 	ms()->tokens = tokens;
 }
@@ -22,8 +21,7 @@ void	*expand_token(void *elem)
 	int		i;
 
 	if (!elem)
-	//TODO: Return error and exit minishell
-		return ((void *)elem);
+		program_errors("MALLOC", true, true);
 	token = (t_token *)elem;
 	if (token->parse_code == SINGLE_QUOTES)
 		return ((void *)create_token(token->text, token->parse_code));
@@ -51,8 +49,9 @@ static void	expand_env(t_token *token, int i)
 	if (!env)
 	{
 		ft_strdel(&token->text);
-		// TODO: Return error and exit minishell
 		token->text = (char *)calloc(1, 1);
+		if (!token->text)
+			program_errors("MALLOC", true, true);
 		return ;
 	}
 	start = (unsigned int)i++;
@@ -90,9 +89,8 @@ static t_token	*create_token(char *text, int code)
 	t_token	*token;
 
 	token = calloc(1, sizeof(t_token));
-	// TODO: Return error and exit minishell
-	// if (!new)
-	// 	error();
+	if (!token)
+		program_errors("MALLOC", true, true);
 	token->text = text;
 	token->parse_code = code;
 	return (token);

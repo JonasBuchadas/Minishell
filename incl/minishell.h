@@ -67,13 +67,17 @@ typedef struct s_minishell
 
 t_minishell *ms(void);
 
-void command_errors(char *errname, bool stop);
-void program_errors(char *errname, bool stop);
+void command_errors(char *errname, bool clear, bool stop);
+void program_errors(char *errname, bool clear, bool stop);
+void check_malloc(void *ptr);
 void create_tokens(void);
 void expand_tokens(void);
+void clear_data(bool clear_history);
 void del_token(void *token);
 void del_token_list(void *elem);
+void del_command(void *elem);
 void print_token(void *token);
+void print_command(void *elem);
 void *expand_token(void *elem);
 void create_commands();
 bool is_metachar(char c);

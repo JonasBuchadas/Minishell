@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	command_errors(char *errname, bool stop)
+void	command_errors(char *errname,bool clear, bool stop)
 {
 	char	*prompt_line;
 	char	*full_line;
@@ -10,16 +10,28 @@ void	command_errors(char *errname, bool stop)
 	ft_putendl_fd(full_line, 2);
 	ft_strdel(&prompt_line);
 	ft_strdel(&full_line);
-	ft_lstclear(&ms()->tokens, &del_token);
+	if (clear)
+		clear_data(true);
 	if (stop)
 		exit(EXIT_FAILURE);
 }
 
-void	program_errors(char *errname, bool stop)
+void	program_errors(char *errname, bool clear, bool stop)
 {
 	perror(errname);
+	if (clear)
+		clear_data(true);
 	if (stop)
 		exit(EXIT_FAILURE);
+}
+
+void	clear_data(bool clear_history)
+{
+	if (clear_history)
+		rl_clear_history();
+	ft_strdel(&ms()->input);
+	ft_lstclear(&ms()->tokens, &del_token);
+	ft_lstclear(&ms()->commands, &del_command);
 }
 
 void	del_token(void *elem)
@@ -44,4 +56,36 @@ void	print_token(void *elem)
 		return ;
 	token = (t_token *)elem;
 	printf("Token :%s\n", token->text);
+}
+
+void print_command(void *elem)
+{
+	t_command	*command_elem;
+	char		**command;
+
+	if (!elem)
+		return;
+	command_elem = (t_command *)elem;
+	command = command_elem->command;
+	while (*command)
+	{
+		printf("%s,", *command);
+		command++;
+	}
+	printf("\n");
+}
+
+void del_command(void *elem)
+{
+	t_command *command;
+
+	command = (t_command *)elem;
+	ft_strarray_clear(&command->command);
+	ft_memdel(&elem);
+}
+
+void check_malloc(void *ptr)
+{
+	if (!ptr)
+		program_errors("MALLOC", true, true);
 }
