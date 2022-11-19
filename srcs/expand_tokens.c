@@ -49,9 +49,7 @@ static void	expand_env(t_token *token, int i)
 	if (!env)
 	{
 		ft_strdel(&token->text);
-		token->text = (char *)calloc(1, 1);
-		if (!token->text)
-			program_errors("MALLOC", true, true);
+		token->text = (char *)protected_calloc(1, 1);
 		return ;
 	}
 	start = (unsigned int)i++;
@@ -88,9 +86,7 @@ static t_token	*create_token(char *text, int code)
 {
 	t_token	*token;
 
-	token = calloc(1, sizeof(t_token));
-	if (!token)
-		program_errors("MALLOC", true, true);
+	token = protected_calloc(1, sizeof(t_token));
 	token->text = text;
 	token->parse_code = code;
 	return (token);

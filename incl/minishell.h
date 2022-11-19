@@ -48,13 +48,16 @@ typedef struct s_token
 typedef struct s_command
 {
 	char	**command;
-	int		in;
-	int		out;
+	int		in_fd;
+	int		out_fd;
+	int		*pipe;
 }	t_command;
 
 typedef struct s_minishell
 {
 	pid_t	pid_cmd;
+	int		fd_input;
+	int		fd_output;
 	char		**cmd_args;
 	char		*cmd;
 	char		**envp;
@@ -62,6 +65,8 @@ typedef struct s_minishell
 	char		*input;
 	t_list		*tokens;
 	t_list		*commands;
+	int			last_fd_in;
+	int			last_fd_out;
 	unsigned int	last_i;
 }			t_minishell;
 
@@ -69,9 +74,11 @@ t_minishell *ms(void);
 
 void command_errors(char *errname, bool clear, bool stop);
 void program_errors(char *errname, bool clear, bool stop);
+void file_error(char *error, char *filename, bool stop);
 void check_malloc(void *ptr);
 void create_tokens(void);
 void expand_tokens(void);
+// void redirect_io();
 void clear_data(bool clear_history);
 void del_token(void *token);
 void del_token_list(void *elem);
@@ -81,5 +88,7 @@ void print_command(void *elem);
 void *expand_token(void *elem);
 void create_commands();
 bool is_metachar(char c);
+void *protected_calloc(size_t count, size_t size);
+void read_file(char *filename);
 
 #endif

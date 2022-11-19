@@ -112,9 +112,7 @@ static void add_token(unsigned int start, int len, int parse_code)
 		ft_strdel(&text);
 		return ;
 	}
-	token = ft_calloc(1, sizeof(t_token));
-	if (!token)
-		program_errors("MALLOC", true, true);
+	token = protected_calloc(1, sizeof(t_token));
 	token->parse_code = parse_code;
 	token->text = text;
 	if (!ms()->tokens)

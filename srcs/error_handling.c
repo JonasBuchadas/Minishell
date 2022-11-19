@@ -16,6 +16,23 @@ void	command_errors(char *errname,bool clear, bool stop)
 		exit(EXIT_FAILURE);
 }
 
+void file_error(char *error, char *filename, bool stop)
+{
+	char *line;
+
+	if (ft_strequal(error, "NO FILE"))
+		line = ft_strjoin("minishell: no such file or directory: ", filename);
+	else
+		line = ft_strjoin("minishell: permission denied: ", filename);
+	ft_putendl_fd(line, 2);
+	ft_strdel(&line);
+	if (stop)
+	{
+		clear_data(false);
+		exit(EXIT_FAILURE);
+	}
+}
+
 void	program_errors(char *errname, bool clear, bool stop)
 {
 	perror(errname);
@@ -82,10 +99,4 @@ void del_command(void *elem)
 	command = (t_command *)elem;
 	ft_strarray_clear(&command->command);
 	ft_memdel(&elem);
-}
-
-void check_malloc(void *ptr)
-{
-	if (!ptr)
-		program_errors("MALLOC", true, true);
 }
