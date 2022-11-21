@@ -67,6 +67,7 @@ typedef struct s_minishell
 	t_list		*commands;
 	int			last_fd_in;
 	int			last_fd_out;
+	int		last_error_cd;
 	unsigned int	last_i;
 }			t_minishell;
 
@@ -89,6 +90,6 @@ void *expand_token(void *elem);
 void create_commands();
 bool is_metachar(char c);
 void *protected_calloc(size_t count, size_t size);
-void read_file(char *filename);
+int read_file(char *filename)
 
 #endif

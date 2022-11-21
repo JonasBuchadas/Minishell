@@ -77,7 +77,10 @@ static char	*expand_env_var(t_token *token, int i)
 		len++;
 	start = (unsigned int)i + 1;
 	temp1 = ft_substr(token->text, start, len);
-	env = getenv(temp1);
+	if (ft_strequal(temp1, "?"))
+		env = ft_itoa(ms()->last_error_cd);
+	else
+		env = getenv(temp1);
 	ft_strdel(&temp1);
 	return (env);
 }
