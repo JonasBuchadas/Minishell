@@ -12,15 +12,17 @@ void create_commands()
 
 	command = (char *)protected_calloc(1, 1);
 	current = ms()->tokens;
-	ms()->last_fd_in = STDIN_FILENO;
-	ms()->last_fd_out = STDOUT_FILENO;
 	while (current)
 	{
+	ms()->last_fd_out = STDOUT_FILENO;
 		token = (t_token *)current->content;
 		if (token->parse_code != METACHAR)
 			command = join_token(command, token->text);
 		else
-			command = add_metachar(command, token->text);
+		{
+			current = add_metachar(command, current, token->text);
+
+		}
 		current = current->next;
 	}
 	add_command(command,false, ms()->last_fd_in, ms()->last_fd_out);
@@ -37,17 +39,17 @@ static char	*join_token(char *cmd, char *str)
 	return temp;
 }
 
-static char *add_metachar(char *cmd, char *meta_str)
+static char *add_metachar(char *cmd, t_list *tokens, char *meta_str)
 {
 	// char	*meta;
 	char	*new_cmd;
 
 	if (ft_strequal(meta_str, "|"))
-		add_command(cmd, true, ms()->last_fd_in, ms()->last_fd_out);
+		add_command(cmd, true);
 	if (ft_strequal(meta_str, "<"))
-		ms()->last_fd_in = // FD of next token (Open next token)
+		ms()->file_input = // FD of next token (Open next token)
 	if (ft_strequal(meta_str, ">"))
-		ms()->last_fd_out = // FD of next token (Open next token)
+		ms()->file_output = // FD of next token (Open next token)
 			// if (!ft_strequal(cmd, ""))
 			// 	add_command(cmd);
 			// ft_strdel(&cmd);
@@ -65,17 +67,24 @@ static void add_command(char *cmd, bool create_pipe, int in_fd, int out_fd)
 
 	command = protected_calloc(1, sizeof(t_command));
 	command->command = ft_split(cmd, ' ');
-	command->in_fd = in_fd;
-	command->out_fd = out_fd;
+	if (ms()->file_input != STDIN_FILENO)
+		command->in_fd = ms()->file_input;
+	else
+		command->in_fd = ms()->last_fd_in;
+	command->out_fd = ms()->last_fd_out;
 	if (create_pipe)
 	{
 		if (pipe(command->pipe) == ERROR)
 			program_errors("OPENING PIPES", true, true);
-		command->out_fd = command->pipe[1];
+		if (command->out_fd != STDOUT_FILENO)
+			command->out_fd = ms()->file_output;
+		else
+			command->out_fd = command->pipe[1];
 		ms()->last_fd_in = command->pipe[0];
 	}
 	if (!ms()->commands)
 		ms()->commands = ft_lstnew((void *)command);
 	else
 		ft_lstadd_back(&ms()->commands, ft_lstnew((void *)command));
+	ms()->last_fd_out = STDOUT_FILENO;
 }

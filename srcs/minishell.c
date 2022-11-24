@@ -41,6 +41,10 @@ int	main(int argc, char **argv, char **envp)
 static void	init_minishell(char **envp)
 {
 	ms()->envp = envp;
+	ms()->file_input = STDIN_FILENO;
+	ms()->file_output = STDOUT_FILENO;
+	ms()->last_fd_in = STDIN_FILENO;
+	ms()->last_fd_out = STDOUT_FILENO;
 	command_paths();
 }
 

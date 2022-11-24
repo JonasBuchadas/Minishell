@@ -56,8 +56,8 @@ typedef struct s_command
 typedef struct s_minishell
 {
 	pid_t	pid_cmd;
-	int		fd_input;
-	int		fd_output;
+	int		file_input;
+	int		file_output;
 	char		**cmd_args;
 	char		*cmd;
 	char		**envp;
