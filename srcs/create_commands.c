@@ -61,7 +61,7 @@ static char *add_metachar(char *cmd, t_list *tokens, char *meta_str)
 	return (new_cmd);
 }
 
-static void add_command(char *cmd, bool create_pipe, int in_fd, int out_fd)
+static void add_command(char *cmd, bool create_pipe)
 {
 	t_command	*command;
 
