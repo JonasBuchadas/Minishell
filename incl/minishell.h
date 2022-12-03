@@ -50,7 +50,8 @@ typedef struct s_command
 	char	**command;
 	int		in_fd;
 	int		out_fd;
-	int		*pipe;
+	int		*pipes;
+	bool	pipe;
 }	t_command;
 
 typedef struct s_minishell
@@ -58,15 +59,17 @@ typedef struct s_minishell
 	pid_t	pid_cmd;
 	int		file_input;
 	int		file_output;
-	char		**cmd_args;
-	char		*cmd;
-	char		**envp;
-	char		**env_paths;
-	char		*input;
-	t_list		*tokens;
-	t_list		*commands;
-	int			last_fd_in;
-	int			last_fd_out;
+	char	*limiter;
+	char	*err_message;
+	char	**cmd_args;
+	char	*cmd;
+	char	**envp;
+	char	**env_paths;
+	char	*input;
+	t_list	*tokens;
+	t_list	*commands;
+	int		last_fd_in;
+	int		last_fd_out;
 	int		last_error_cd;
 	unsigned int	last_i;
 }			t_minishell;
@@ -75,6 +78,7 @@ t_minishell *ms(void);
 
 void command_errors(char *errname, bool clear, bool stop);
 void program_errors(char *errname, bool clear, bool stop);
+void unexpected_token_error(char *token);
 void file_error(char *error, char *filename, bool stop);
 void check_malloc(void *ptr);
 void create_tokens(void);
@@ -90,6 +94,9 @@ void *expand_token(void *elem);
 void create_commands();
 bool is_metachar(char c);
 void *protected_calloc(size_t count, size_t size);
-int read_file(char *filename)
+int read_file(char *filename);
+int write_file(char *filename);
+int append_file(char *filename);
+int here_doc(char *limiter);
 
 #endif

@@ -1,8 +1,8 @@
 #include "minishell.h"
 
-static char *join_token(char *cmd, char *str);
-static char *add_metachar(char *cmd, char *meta_str);
-static void add_command(char *cmd, bool pipe, int in_fd, int out_fd);
+static char		*join_token(char *cmd, char *str);
+static t_list	*redirect_io(t_list *tokens, char *redirect);
+static char		*add_command(char *cmd, bool pipe);
 
 void create_commands()
 {
@@ -18,14 +18,13 @@ void create_commands()
 		token = (t_token *)current->content;
 		if (token->parse_code != METACHAR)
 			command = join_token(command, token->text);
+		else if (ft_strequal(token->text, "|"))
+			command = add_command(command, true);
 		else
-		{
-			current = add_metachar(command, current, token->text);
-
-		}
+			current = redirect_io(current, token->text);
 		current = current->next;
 	}
-	add_command(command,false, ms()->last_fd_in, ms()->last_fd_out);
+	command = add_command(command, false);
 	ft_strdel(&command);
 	ft_lstiter(ms()->commands, print_command);
 }
@@ -39,52 +38,55 @@ static char	*join_token(char *cmd, char *str)
 	return temp;
 }
 
-static char *add_metachar(char *cmd, t_list *tokens, char *meta_str)
+static t_list *redirect_io(t_list *tokens, char *redirect)
 {
-	// char	*meta;
-	char	*new_cmd;
+	t_list	*next;
+	t_token	*token;
+	char	*filename;
 
-	if (ft_strequal(meta_str, "|"))
-		add_command(cmd, true);
-	if (ft_strequal(meta_str, "<"))
-		ms()->file_input = // FD of next token (Open next token)
-	if (ft_strequal(meta_str, ">"))
-		ms()->file_output = // FD of next token (Open next token)
-			// if (!ft_strequal(cmd, ""))
-			// 	add_command(cmd);
-			// ft_strdel(&cmd);
-			// meta = (char *)protected_calloc(1, 1);
-			// meta = join_token(meta, meta_str);
-			// add_command(meta);
-			// ft_strdel(&meta);
-			new_cmd = (char *)protected_calloc(1, 1);
-	return (new_cmd);
+	if (!tokens->next)
+		unexpected_token_error("newline");
+	next = tokens->next;
+	token = (t_token *)next->content;
+	filename = ft_strtrim(token->text, " ");
+	if (token->parse_code == METACHAR)
+		unexpected_token_error(token->text);
+	if (ft_strequal(redirect, "<"))
+		ms()->file_input = read_file(filename);
+	if (ft_strequal(redirect, ">"))
+		ms()->file_output = write_file(filename);
+	if (ft_strequal(redirect, "<<"))
+		ms()->file_input = here_doc(filename);
+	if (ft_strequal(redirect, ">>"))
+		ms()->file_output = append_file(filename);
+	ft_strdel(&filename);
+	return (next);
 }
 
-static void add_command(char *cmd, bool create_pipe)
+static char *add_command(char *cmd, bool create_pipe)
 {
 	t_command	*command;
 
 	command = protected_calloc(1, sizeof(t_command));
 	command->command = ft_split(cmd, ' ');
-	if (ms()->file_input != STDIN_FILENO)
-		command->in_fd = ms()->file_input;
-	else
-		command->in_fd = ms()->last_fd_in;
+	command->in_fd = ms()->file_input;
 	command->out_fd = ms()->last_fd_out;
+	command->pipe = false;
 	if (create_pipe)
-	{
-		if (pipe(command->pipe) == ERROR)
-			program_errors("OPENING PIPES", true, true);
-		if (command->out_fd != STDOUT_FILENO)
-			command->out_fd = ms()->file_output;
-		else
-			command->out_fd = command->pipe[1];
-		ms()->last_fd_in = command->pipe[0];
-	}
+		command->pipe = true;
 	if (!ms()->commands)
 		ms()->commands = ft_lstnew((void *)command);
 	else
 		ft_lstadd_back(&ms()->commands, ft_lstnew((void *)command));
-	ms()->last_fd_out = STDOUT_FILENO;
+	ms()->file_input = STDIN_FILENO;
+	ms()->file_output = STDOUT_FILENO;
+	ft_strdel(&cmd);
+	return (char *)protected_calloc(1, 1);
 }
+		// if (pipe(command->pipe) == ERROR)
+		// 	program_errors("OPENING PIPES", true, true);
+		// if (command->out_fd != STDOUT_FILENO)
+		// 	command->out_fd = ms()->file_output;
+		// else
+		// 	command->out_fd = command->pipe[1];
+		// ms()->last_fd_in = command->pipe[0];

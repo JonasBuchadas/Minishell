@@ -16,6 +16,20 @@ void	command_errors(char *errname,bool clear, bool stop)
 		exit(EXIT_FAILURE);
 }
 
+void unexpected_token_error(char *token)
+{
+	char	*error_msg;
+	char	*temp;
+	char	*msg;
+
+	error_msg = "minishell: syntax error near unexpected token `";
+	temp = ft_strjoin(error_msg, token);
+	msg = ft_strjoin(temp, "'");
+	ft_strdel(&temp);
+	ms()->err_message = msg;
+	program_errors(ms()->err_message, true, true);
+}
+
 void file_error(char *error, char *filename, bool stop)
 {
 	char *line;
@@ -47,6 +61,9 @@ void	clear_data(bool clear_history)
 	if (clear_history)
 		rl_clear_history();
 	ft_strdel(&ms()->input);
+	ft_strdel(&ms()->limiter);
+	ft_strdel(&ms()->err_message);
+	ft_strdel(&ms()->cmd);
 	ft_lstclear(&ms()->tokens, &del_token);
 	ft_lstclear(&ms()->commands, &del_command);
 }
