@@ -105,8 +105,15 @@ static void add_token(unsigned int start, int len, int parse_code)
 {
 	t_token *token;
 	char *text;
+	char *temp;
 
 	text = ft_substr(ms()->input, start, len);
+	if (parse_code == SINGLE_QUOTES || parse_code == DOUBLE_QUOTES)
+	{
+		temp = text;
+		text = ft_strjoin(" ", temp);
+		ft_strdel(&temp);
+	}
 	if (ft_strequal(text, " "))
 	{
 		ft_strdel(&text);
