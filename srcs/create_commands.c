@@ -70,23 +70,22 @@ static char *add_command(char *cmd, bool create_pipe)
 	command = protected_calloc(1, sizeof(t_command));
 	command->command = ft_split(cmd, ' ');
 	command->in_fd = ms()->file_input;
-	command->out_fd = ms()->last_fd_out;
+	command->out_fd = ms()->file_output;
 	command->pipe = false;
 	if (create_pipe)
 		command->pipe = true;
 	if (!ms()->commands)
+	{
+		command->cmd_nu = 0;
 		ms()->commands = ft_lstnew((void *)command);
+	}
 	else
+	{
+		command->cmd_nu = ft_lstsize(ms()->commands);
 		ft_lstadd_back(&ms()->commands, ft_lstnew((void *)command));
+	}
 	ms()->file_input = STDIN_FILENO;
 	ms()->file_output = STDOUT_FILENO;
 	ft_strdel(&cmd);
 	return (char *)protected_calloc(1, 1);
 }
-		// if (pipe(command->pipe) == ERROR)
-		// 	program_errors("OPENING PIPES", true, true);
-		// if (command->out_fd != STDOUT_FILENO)
-		// 	command->out_fd = ms()->file_output;
-		// else
-		// 	command->out_fd = command->pipe[1];
-		// ms()->last_fd_in = command->pipe[0];

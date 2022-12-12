@@ -64,8 +64,15 @@ void	clear_data(bool clear_history)
 	ft_strdel(&ms()->limiter);
 	ft_strdel(&ms()->err_message);
 	ft_strdel(&ms()->cmd);
+	close_pipes();
+	ft_lstiter(ms()->commands, &close_fd);
 	ft_lstclear(&ms()->tokens, &del_token);
 	ft_lstclear(&ms()->commands, &del_command);
+	if (access(".inputstream.txt", F_OK) != -1)
+	{
+		if (unlink(".inputstream.txt") == ERROR)
+			program_errors("UNLINKING INPUTSTREAM", false, true);
+	}
 }
 
 void	del_token(void *elem)
@@ -116,4 +123,31 @@ void del_command(void *elem)
 	command = (t_command *)elem;
 	ft_strarray_clear(&command->command);
 	ft_memdel(&elem);
+}
+
+void close_fd(void *elem)
+{
+	t_command *command;
+
+	command = (t_command *)elem;
+	if (!(command->in_fd == -1 || command->in_fd == STDIN_FILENO))
+		close(command->in_fd);
+	if (!(command->out_fd == -1 || command->out_fd == STDOUT_FILENO))
+		close(command->out_fd);
+}
+
+void close_pipes()
+{
+	int i;
+
+	if (!ms()->pipes)
+		return;
+	i = -1;
+	while (++i < ms()->n_pipes)
+	{
+		close(ms()->pipes[i]);
+		ms()->pipes[i] = -1;
+	}
+	free(ms()->pipes);
+	ms()->pipes = NULL;
 }

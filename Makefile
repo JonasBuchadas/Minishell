@@ -23,6 +23,7 @@ SRCS=		structs.c \
 			create_commands.c \
 			error_handling.c \
 			aux.c \
+			exec_cmds.c \
 			input.c
 SRCS_NAME=	$(addprefix $(SRCS_PATH), $(SRC_NAME) $(SRCS))
 SRCS_BONUS=	$(addprefix $(SRCS_PATH), $(SRC_BONUS) $(SRCS))

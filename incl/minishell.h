@@ -47,16 +47,19 @@ typedef struct s_token
 
 typedef struct s_command
 {
+	int		cmd_nu;
 	char	**command;
 	int		in_fd;
 	int		out_fd;
-	int		*pipes;
+	// int		*pipes;
 	bool	pipe;
 }	t_command;
 
 typedef struct s_minishell
 {
 	pid_t	pid_cmd;
+	int		n_pipes;
+	int		*pipes;
 	int		file_input;
 	int		file_output;
 	char	*limiter;
@@ -88,6 +91,7 @@ void clear_data(bool clear_history);
 void del_token(void *token);
 void del_token_list(void *elem);
 void del_command(void *elem);
+void close_fd(void *elem);
 void print_token(void *token);
 void print_command(void *elem);
 void *expand_token(void *elem);
@@ -98,5 +102,8 @@ int read_file(char *filename);
 int write_file(char *filename);
 int append_file(char *filename);
 int here_doc(char *limiter);
+void exec_input(void);
+void close_pipes();
+void dup2_util(int read_end, int write_end);
 
 #endif
