@@ -4,14 +4,14 @@ static void create_pipes(void);
 static char *find_command(char *cmd, char **paths);
 static void redirect_io(t_command *command);
 
-	void exec_input(void)
+void exec_input(void)
 {
 	t_command	*command;
 	t_list		*current;
 
 	create_pipes();
 	current = ms()->commands;
-	while (!current)
+	while (current)
 	{
 		command = (t_command *)current->content;
 		ms()->pid_cmd = fork();
@@ -28,6 +28,7 @@ static void redirect_io(t_command *command);
 				command_errors(command->command[0], true, true);
 			execve(ms()->cmd, command->command, ms()->envp);
 		}
+		current = current->next;
 	}
 }
 
@@ -38,7 +39,7 @@ static void redirect_io(t_command *command)
 
 	nu_cmds = ft_lstsize(ms()->commands);
 	cmd_nu = command->cmd_nu;
-	if (command->cmd_nu == 0 && command->pipe)
+	if (cmd_nu == 0 && command->pipe)
 		dup2_util(command->in_fd, ms()->pipes[0 + WRITE_END]);
 	else if (cmd_nu == 0 && !command->pipe)
 		dup2_util(command->in_fd, command->out_fd);
@@ -50,11 +51,18 @@ static void redirect_io(t_command *command)
 
 static void create_pipes(void)
 {
-	t_list *commands;
+	int		i;
+	t_list	*commands;
 
 	commands = ms()->commands;
 	ms()->n_pipes = 2 * (ft_lstsize(commands) - 1);
-	ms()->pipes = protected_calloc(ms()->n_pipes, sizeof(int));
+	ms()->pipes = (int *)protected_calloc(ms()->n_pipes, sizeof(int));
+	i = -1;
+	while (++i < ft_lstsize(ms()->commands) - 1)
+	{
+		if (pipe(ms()->pipes + 2 * i) == ERROR)
+			program_errors("OPENING PIPES", true, true);
+	}
 }
 
 static char *find_command(char *cmd, char **paths)
