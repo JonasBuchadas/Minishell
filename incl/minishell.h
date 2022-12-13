@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: j <marvin@42.fr>                           +#+  +:+       +#+        */
+/*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 10:04:11 by jocaetan          #+#    #+#             */
-/*   Updated: 2022/04/29 15:19:14 by j                ###   ########.fr       */
+/*   Updated: 2022/12/13 00:42:15 by fvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <stddef.h>
 
 // Parse Codes
 # define NORMAL 0
@@ -105,5 +106,13 @@ int here_doc(char *limiter);
 void exec_input(void);
 void close_pipes();
 void dup2_util(int read_end, int write_end);
-
+/* BUILTINS */
+int	ft_isbt(t_command *cmd);
+void ft_execbt(t_command *cmd);
+void	bt_echo(t_command	*cmd);
+void	bt_cd(t_command	*cmd);
+void	bt_pwd(void);
+/* AUX */
+char	*get_env(char	*str);
+int		ft_strcmp(const char *s1, const char *s2);
 #endif

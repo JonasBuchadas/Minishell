@@ -12,7 +12,9 @@ CFLAGS=		-Wall -Werror -Wextra -g
 LIBFT_PATH=	./libft/
 INCL_PATH=	incl/
 SRCS_PATH=	srcs/
+SRCS_BT_PATH= srcs/builtins/
 OBJS_PATH=	objs/
+OBJS_BT_PATH= objs/builtins/
 
 ### SOURCE FILES ###
 SRC_NAME=	$(NAME).c
@@ -24,7 +26,11 @@ SRCS=		structs.c \
 			error_handling.c \
 			aux.c \
 			exec_cmds.c \
-			input.c
+			input.c \
+			builtins/builtin.c \
+			builtins/echo.c \
+			builtins/cd.c \
+			builtins/pwd.c
 SRCS_NAME=	$(addprefix $(SRCS_PATH), $(SRC_NAME) $(SRCS))
 SRCS_BONUS=	$(addprefix $(SRCS_PATH), $(SRC_BONUS) $(SRCS))
 
@@ -69,17 +75,20 @@ $(OBJS_PATH)%.o: $(SRCS_PATH)%.c
 ### ACTIVE RULES ###
 all: $(NAME)
 
-bonus: $(OBJS_PATH) $(OBJS_BONUS)
+bonus: $(OBJS_PATH) $(OBJS_BT_PATH) $(OBJS_BONUS)
 	@$(LIBFTMAKE)
 	@$(CC) $(CFLAGS) $(OBJS_BONUS) $(INC) $(LINKS) -o $(NAME)
 	@$(GREEN)$(NAME) Program created$(DEFAULT)
 
-$(NAME): $(OBJS_PATH) $(OBJS_NAME)
+$(NAME): $(OBJS_PATH) $(OBJS_BT_PATH) $(OBJS_NAME)
 	@$(LIBFTMAKE)
 	@$(CC) $(CFLAGS) $(OBJS_NAME) $(INC) $(LINKS) -o $(NAME)
 	@$(GREEN)$(NAME) Program created$(DEFAULT)
 
 $(OBJS_PATH):
+	@mkdir -p $@
+
+$(OBJS_BT_PATH):
 	@mkdir -p $@
 
 clean:
