@@ -4,7 +4,7 @@ static char		*join_token(char *cmd, char *str);
 static t_list	*redirect_io(t_list *tokens, char *redirect);
 static char		*add_command(char *cmd, bool pipe);
 
-void create_commands()
+void create_commands(void)
 {
 	char	*command;
 	t_list	*current;

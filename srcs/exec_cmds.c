@@ -24,9 +24,12 @@ void exec_input(void)
 			if (access(command->command[0], F_OK) != ERROR)
 				execve(command->command[0], command->command, ms()->envp);
 			ms()->cmd = find_command(command->command[0], ms()->env_paths);
-			if (!ms()->cmd || access(ms()->cmd, F_OK) == ERROR)
+			if ((!ms()->cmd || access(ms()->cmd, F_OK) == ERROR) && !ft_isbt(command))
 				command_errors(command->command[0], true, true);
-			execve(ms()->cmd, command->command, ms()->envp);
+			if (ft_isbt(command))
+				ft_execbt(command);
+			else
+				execve(ms()->cmd, command->command, ms()->envp);
 		}
 		current = current->next;
 	}
@@ -67,6 +70,9 @@ static void create_pipes(void)
 
 static char *find_command(char *cmd, char **paths)
 {
+	/* If it's not a file and it's not a binary in PATH,
+	paths gets freed without being reinitialzed,
+	thus throwing an error on consecutive commands*/
 	char *path;
 	char *tmp;
 	size_t i;
@@ -79,13 +85,13 @@ static char *find_command(char *cmd, char **paths)
 		ft_strdel(&tmp);
 		if (access(path, F_OK) == 0)
 		{
-			ft_strarray_clear(&paths);
+			/* ft_strarray_clear(&paths); */
 			return (path);
 		}
 		else
 			ft_strdel(&path);
 		i++;
 	}
-	ft_strarray_clear(&paths);
+	/* ft_strarray_clear(&paths); */
 	return (NULL);
 }

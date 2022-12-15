@@ -9,7 +9,8 @@ int	main(int argc, char **argv, char **envp)
 	(void) argv;
 
 	init_minishell(envp);
-	while (true)
+	sg_init();
+	while (ms()->exit <= 0)
 	{
 		ms()->input = readline(PROMPT);
 		if (!(ms()->input))
@@ -32,12 +33,14 @@ int	main(int argc, char **argv, char **envp)
 		clear_data(false);
 	}
 	clear_data(true);
+	ft_strarray_clear(&ms()->envp);
 	return (EXIT_SUCCESS);
 }
 
 static void	init_minishell(char **envp)
 {
-	ms()->envp = envp;
+	ms()->envp = init_env(envp, 0);
+	ms()->exit = 0;
 	ms()->file_input = STDIN_FILENO;
 	ms()->file_output = STDOUT_FILENO;
 	ms()->last_fd_in = STDIN_FILENO;

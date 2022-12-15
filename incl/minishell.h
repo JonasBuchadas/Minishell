@@ -6,7 +6,7 @@
 /*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 10:04:11 by jocaetan          #+#    #+#             */
-/*   Updated: 2022/12/13 00:42:15 by fvarela          ###   ########.fr       */
+/*   Updated: 2022/12/15 09:59:46 by fvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <stddef.h>
+# include <limits.h>
+# include <signal.h>
 
 // Parse Codes
 # define NORMAL 0
@@ -52,67 +54,78 @@ typedef struct s_command
 	char	**command;
 	int		in_fd;
 	int		out_fd;
-	// int		*pipes;
+/* int		*pipes; */
 	bool	pipe;
 }	t_command;
 
 typedef struct s_minishell
 {
-	pid_t	pid_cmd;
-	int		n_pipes;
-	int		*pipes;
-	int		file_input;
-	int		file_output;
-	char	*limiter;
-	char	*err_message;
-	char	**cmd_args;
-	char	*cmd;
-	char	**envp;
-	char	**env_paths;
-	char	*input;
-	t_list	*tokens;
-	t_list	*commands;
-	int		last_fd_in;
-	int		last_fd_out;
-	int		last_error_cd;
+	pid_t			pid_cmd;
+	int				n_pipes;
+	int				*pipes;
+	int				file_input;
+	int				file_output;
+	char			*limiter;
+	char			*err_message;
+	char			**cmd_args;
+	char			*cmd;
+	char			**envp;
+	char			**env_paths;
+	char			*input;
+	t_list			*tokens;
+	t_list			*commands;
+	int				last_fd_in;
+	int				last_fd_out;
+	int				last_error_cd;
+	int				exit;
 	unsigned int	last_i;
 }			t_minishell;
 
-t_minishell *ms(void);
+t_minishell	*ms(void);
 
-void command_errors(char *errname, bool clear, bool stop);
-void program_errors(char *errname, bool clear, bool stop);
-void unexpected_token_error(char *token);
-void file_error(char *error, char *filename, bool stop);
-void check_malloc(void *ptr);
-void create_tokens(void);
-void expand_tokens(void);
+void		command_errors(char *errname, bool clear, bool stop);
+void		program_errors(char *errname, bool clear, bool stop);
+void		unexpected_token_error(char *token);
+void		file_error(char *error, char *filename, bool stop);
+void		check_malloc(void *ptr);
+void		create_tokens(void);
+void		expand_tokens(void);
 // void redirect_io();
-void clear_data(bool clear_history);
-void del_token(void *token);
-void del_token_list(void *elem);
-void del_command(void *elem);
-void close_fd(void *elem);
-void print_token(void *token);
-void print_command(void *elem);
-void *expand_token(void *elem);
-void create_commands();
-bool is_metachar(char c);
-void *protected_calloc(size_t count, size_t size);
-int read_file(char *filename);
-int write_file(char *filename);
-int append_file(char *filename);
-int here_doc(char *limiter);
-void exec_input(void);
-void close_pipes();
-void dup2_util(int read_end, int write_end);
+void		clear_data(bool clear_history);
+void		del_token(void *token);
+void		del_token_list(void *elem);
+void		del_command(void *elem);
+void		close_fd(void *elem);
+void		print_token(void *token);
+void		print_command(void *elem);
+void		*expand_token(void *elem);
+void		create_commands(void);
+bool		is_metachar(char c);
+void		*protected_calloc(size_t count, size_t size);
+int			read_file(char *filename);
+int			write_file(char *filename);
+int			append_file(char *filename);
+int			here_doc(char *limiter);
+void		exec_input(void);
+void		close_pipes(void);
+void		dup2_util(int read_end, int write_end);
 /* BUILTINS */
-int	ft_isbt(t_command *cmd);
-void ft_execbt(t_command *cmd);
-void	bt_echo(t_command	*cmd);
-void	bt_cd(t_command	*cmd);
-void	bt_pwd(void);
+int			ft_isbt(t_command *cmd);
+void		ft_execbt(t_command *cmd);
+void		bt_echo(t_command	*cmd);
+void		bt_cd(t_command	*cmd);
+void		bt_pwd(void);
+void		bt_env(void);
+void		bt_export(t_command *cmd);
+int			bt_unset(t_command *cmd);
+void		bt_exit(void);
 /* AUX */
-char	*get_env(char	*str);
-int		ft_strcmp(const char *s1, const char *s2);
+int			ft_strcmp(const char *s1, const char *s2);
+/* ENV */
+char		**init_env(char **env, int ra);
+char		*get_env(char	*str);
+char		*get_env_name(char	*str);
+void		set_env(char *env, char *value);
+/* SIGNALS */
+void		sg_init(void);
 #endif

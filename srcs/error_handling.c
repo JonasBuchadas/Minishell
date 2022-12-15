@@ -136,7 +136,7 @@ void close_fd(void *elem)
 		close(command->out_fd);
 }
 
-void close_pipes()
+void close_pipes(void)
 {
 	int i;
 

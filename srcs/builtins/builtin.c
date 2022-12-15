@@ -6,7 +6,7 @@
 /*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 22:59:36 by fvarela           #+#    #+#             */
-/*   Updated: 2022/12/13 00:43:12 by fvarela          ###   ########.fr       */
+/*   Updated: 2022/12/14 08:51:43 by fvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ void	ft_execbt(t_command *cmd)
 	if (ft_strcmp(cmd->command[0], "pwd") == 0)
 		bt_pwd();
 	if (ft_strcmp(cmd->command[0], "export") == 0)
-		bt_echo(cmd);
+		bt_export(cmd);
 	if (ft_strcmp(cmd->command[0], "unset") == 0)
-		bt_echo(cmd);
+		bt_unset(cmd);
 	if (ft_strcmp(cmd->command[0], "env") == 0)
-		bt_echo(cmd);
+		bt_env();
 	if (ft_strcmp(cmd->command[0], "exit") == 0)
-		bt_echo(cmd);
+		bt_exit();
 }

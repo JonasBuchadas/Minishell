@@ -27,10 +27,16 @@ SRCS=		structs.c \
 			aux.c \
 			exec_cmds.c \
 			input.c \
+			envp.c \
+			signal.c \
 			builtins/builtin.c \
 			builtins/echo.c \
 			builtins/cd.c \
-			builtins/pwd.c
+			builtins/pwd.c \
+			builtins/env.c \
+			builtins/export.c \
+			builtins/unset.c \
+			builtins/exit.c 
 SRCS_NAME=	$(addprefix $(SRCS_PATH), $(SRC_NAME) $(SRCS))
 SRCS_BONUS=	$(addprefix $(SRCS_PATH), $(SRC_BONUS) $(SRCS))
 

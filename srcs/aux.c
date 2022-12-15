@@ -38,17 +38,3 @@ int	ft_strcmp(const char *s1, const char *s2)
 	}
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
-
-char	*get_env(char	*str)
-{
-	int	c;
-
-	c = 0;
-	while (ms()->envp[c])
-	{
-		if (ft_strncmp(ms()->envp[c], str, ft_strlen(str)) == 0)
-			return (&ms()->envp[c][ft_strlen(str)]);
-		c++;
-	}
-	return (NULL);
-}
