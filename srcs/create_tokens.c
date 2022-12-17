@@ -78,7 +78,7 @@ static int	handle_single_quotes(int i)
 //of last token index and the current index
 static int handle_metachar(int i)
 {
-	size_t len;
+	int len;
 
 	len = i - ms()->last_i;
 	if (len > 0)
