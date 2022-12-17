@@ -38,3 +38,24 @@ int	ft_strcmp(const char *s1, const char *s2)
 	}
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
+
+void	ft_resetfds(void)
+{
+	t_list	*cmds;
+	t_command	*cmd;
+
+	cmds = ms()->commands;
+	while (cmds)
+	{
+		cmd = (t_command *)cmds->content;
+		if (cmd->in_fd > 0)
+			close(cmd->in_fd);
+		if (cmd->out_fd > 0)
+			close(cmd->out_fd);
+		cmds = cmds->next;
+	}
+	dup2(ms()->in, 0);
+	dup2(ms()->out, 1);
+	close(ms()->in);
+	close(ms()->out);
+}

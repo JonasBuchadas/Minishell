@@ -10,9 +10,11 @@ int	main(int argc, char **argv, char **envp)
 
 	init_minishell(envp);
 	sg_init();
-	while (ms()->exit <= 0)
+	while (1)
 	{
+		ms()->on_read = 1;
 		ms()->input = readline(PROMPT);
+		ms()->on_read = 0;
 		if (!(ms()->input))
 			exit(1);
 		if (ft_strequal(ms()->input, "exit"))
