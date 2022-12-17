@@ -36,7 +36,7 @@ SRCS=		structs.c \
 			builtins/env.c \
 			builtins/export.c \
 			builtins/unset.c \
-			builtins/exit.c 
+			builtins/exit.c
 SRCS_NAME=	$(addprefix $(SRCS_PATH), $(SRC_NAME) $(SRCS))
 SRCS_BONUS=	$(addprefix $(SRCS_PATH), $(SRC_BONUS) $(SRCS))
 
@@ -79,9 +79,14 @@ $(OBJS_PATH)%.o: $(SRCS_PATH)%.c
 	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 ### ACTIVE RULES ###
-all: $(NAME)
+help:  ## show this help
+	@echo "usage: make [target]"
+	@echo ""
+	@egrep "^(.+)\:\ .*##\ (.+)" ${MAKEFILE_LIST} | sed 's/:.*##/#/' | column -t -c 2 -s '#'
 
-bonus: $(OBJS_PATH) $(OBJS_BT_PATH) $(OBJS_BONUS)
+all: $(NAME) ## compiles minishell with mandatory requirements
+
+bonus: $(OBJS_PATH) $(OBJS_BT_PATH) $(OBJS_BONUS) ## compiles minishell with bonus requirements
 	@$(LIBFTMAKE)
 	@$(CC) $(CFLAGS) $(OBJS_BONUS) $(INC) $(LINKS) -o $(NAME)
 	@$(GREEN)$(NAME) Program created$(DEFAULT)
@@ -97,21 +102,21 @@ $(OBJS_PATH):
 $(OBJS_BT_PATH):
 	@mkdir -p $@
 
-clean:
+clean: ## removes object files
 	@make $@ --silent -C $(LIBFT_PATH)
 	@rm -rf $(OBJS_PATH)
 	@$(RED)Object files removed$(DEFAULT)
 
-fclean: clean
+fclean: clean ## removes object files and binary
 	@make $@ --silent -C $(LIBFT_PATH)
 	@$(RED)Libft removed$(DEFAULT)
 	@rm -f $(NAME)
 	@$(RED)$(NAME) Program removed$(DEFAULT)
 
-re: fclean all
+re: fclean all ## recompiles minishell
 
 ### NORMINETTE ###
-norm:
+norm: ## checks norminette requirements
 	@norminette -R CheckForbiddenSourceHeader $(SRCS_PATH)
 	@norminette -R CheckForbiddenSourceHeader $(INCL_PATH)
 	@norminette -R CheckDefine $(SRCS_PATH)
