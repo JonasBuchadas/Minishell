@@ -6,7 +6,7 @@
 /*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 00:16:35 by fvarela           #+#    #+#             */
-/*   Updated: 2022/12/15 09:59:36 by fvarela          ###   ########.fr       */
+/*   Updated: 2022/12/17 12:03:05 by fvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,18 @@ void	bt_export_print(void)
 void	bt_add_export(t_command *cmd)
 {
 	char	*name;
+	char	*temp;
 
-	name = get_env_name(cmd->command[1]);
+	if (!ft_strchr(cmd->command[1], '='))
+		name = ft_strdup(cmd->command[1]);
+	else
+		name = get_env_name(cmd->command[1]);
+	if (name[ft_strlen(name) - 1] != '=')
+	{
+		temp = name;
+		name = ft_strjoin(name, "=");
+		free(temp);
+	}
 	set_env(name, &cmd->command[1][ft_strlen(name)]);
 	free(name);
 }
