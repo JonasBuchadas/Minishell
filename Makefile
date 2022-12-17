@@ -79,12 +79,12 @@ $(OBJS_PATH)%.o: $(SRCS_PATH)%.c
 	@$(CC) $(CFLAGS) $(INC) -c $< -o $@
 
 ### ACTIVE RULES ###
+all: $(NAME) ## compiles minishell with mandatory requirements
+
 help:  ## show this help
 	@echo "usage: make [target]"
 	@echo ""
 	@egrep "^(.+)\:\ .*##\ (.+)" ${MAKEFILE_LIST} | sed 's/:.*##/#/' | column -t -c 2 -s '#'
-
-all: $(NAME) ## compiles minishell with mandatory requirements
 
 bonus: $(OBJS_PATH) $(OBJS_BT_PATH) $(OBJS_BONUS) ## compiles minishell with bonus requirements
 	@$(LIBFTMAKE)
@@ -123,4 +123,4 @@ norm: ## checks norminette requirements
 	@norminette -R CheckDefine $(INCL_PATH)
 
 ### PHONY RULE ###
-.PHONY:	all bonus clean fclean re norm
+.PHONY:	all help bonus clean fclean re norm
