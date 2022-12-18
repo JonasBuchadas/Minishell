@@ -36,4 +36,5 @@ void	bt_echo(t_command	*cmd)
 	}
 	if (!n_flag)
 		write(1, "\n", 1);
+	exit(EXIT_SUCCESS);
 }

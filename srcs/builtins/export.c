@@ -98,4 +98,5 @@ void	bt_export(t_command *cmd)
 		bt_add_export(cmd);
 	else
 		bt_export_print();
+	exit(EXIT_SUCCESS);
 }

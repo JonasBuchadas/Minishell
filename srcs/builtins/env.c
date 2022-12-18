@@ -22,4 +22,5 @@ void	bt_env(void)
 		ft_putstr_fd(ms()->envp[c], 1);
 		write(1, "\n", 1);
 	}
+	exit(EXIT_SUCCESS);
 }
