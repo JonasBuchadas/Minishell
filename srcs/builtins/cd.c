@@ -60,5 +60,4 @@ void	bt_cd(t_command	*cmd)
 		else
 			bt_cd_error(cmd->command);
 	}
-	exit(EXIT_SUCCESS);
 }

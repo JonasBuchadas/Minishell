@@ -47,4 +47,5 @@ void	ft_execbt(t_command *cmd)
 		bt_env();
 	if (ft_strcmp(cmd->command[0], "exit") == 0)
 		bt_exit();
+	exit(EXIT_SUCCESS);
 }

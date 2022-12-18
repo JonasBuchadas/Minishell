@@ -16,5 +16,4 @@ void	bt_pwd(void)
 {
 	ft_putstr_fd(get_env("PWD="), 1);
 	write(1, "\n", 1);
-	exit(EXIT_SUCCESS);
 }
