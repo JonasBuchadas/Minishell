@@ -72,10 +72,10 @@ static char	*expand_env_var(t_token *token, int i)
 	char			*temp1;
 	char			*env;
 
-	len = 0;
+	start = (unsigned int)i + 1;
+	len = start;
 	while (token->text[len] && token->text[len] != ' ')
 		len++;
-	start = (unsigned int)i + 1;
 	temp1 = ft_substr(token->text, start, len);
 	if (ft_strequal(temp1, "?"))
 		env = ft_itoa(ms()->last_error_cd);

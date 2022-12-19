@@ -26,9 +26,10 @@ int	main(int argc, char **argv, char **envp)
 		else
 		{
 			create_tokens();
-			expand_tokens();
-			create_commands();
 			ft_lstiter(ms()->tokens, print_token);
+			expand_tokens();
+			ft_lstiter(ms()->tokens, print_token);
+			create_commands();
 			exec_input();
 		}
 		waitpid(-1, NULL, 0);
