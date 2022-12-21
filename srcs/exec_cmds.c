@@ -4,6 +4,27 @@ static void create_pipes(void);
 static char *find_command(char *cmd, char **paths);
 static void redirect_io(t_command *command);
 
+void	ft_execbin(t_command *command)
+{
+	ms()->pid_cmd = fork();
+	if (ms()->pid_cmd == ERROR)
+		program_errors("FORK", true, true);
+	if (ms()->pid_cmd == CHILD_PROCESS)
+	{
+		redirect_io(command);
+		close_pipes();
+		if (access(command->command[0], F_OK) != ERROR)
+			execve(command->command[0], command->command, ms()->envp);
+		ms()->cmd = find_command(command->command[0], ms()->env_paths);
+		if ((!ms()->cmd || access(ms()->cmd, F_OK) == ERROR) && !ft_isbt(command))
+			command_errors(command->command[0], true, true);
+		if (ft_isbt(command))
+			ft_execbt(command);
+		else
+			execve(ms()->cmd, command->command, ms()->envp);
+	}
+}
+
 void exec_input(void)
 {
 	t_command	*command;
@@ -14,23 +35,10 @@ void exec_input(void)
 	while (current)
 	{
 		command = (t_command *)current->content;
-		ms()->pid_cmd = fork();
-		if (ms()->pid_cmd == ERROR)
-			program_errors("FORK", true, true);
-		if (ms()->pid_cmd == CHILD_PROCESS)
-		{
-			redirect_io(command);
-			close_pipes();
-			if (access(command->command[0], F_OK) != ERROR)
-				execve(command->command[0], command->command, ms()->envp);
-			ms()->cmd = find_command(command->command[0], ms()->env_paths);
-			if ((!ms()->cmd || access(ms()->cmd, F_OK) == ERROR) && !ft_isbt(command))
-				command_errors(command->command[0], true, true);
-			if (ft_isbt(command))
-				ft_execbt(command);
-			else
-				execve(ms()->cmd, command->command, ms()->envp);
-		}
+		if (ft_isbt(command) && ms()->n_pipes <= 0)
+			ft_execbt(command);
+		else
+			ft_execbin(command);
 		current = current->next;
 	}
 }

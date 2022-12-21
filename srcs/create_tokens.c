@@ -20,7 +20,7 @@ void create_tokens(void)
 			i = handle_single_quotes(i);
 		if (is_metachar(ms()->input[i]))
 			i = handle_metachar(i);
-		if (!(ms()->input[i] == '\"' || ms()->input[i] == '\''))
+		if (!(ms()->input[i] == '\"' || ms()->input[i] == '\'') && ms()->input[i])
 			i++;
 	}
 	handle_metachar(i);
