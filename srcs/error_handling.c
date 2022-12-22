@@ -13,7 +13,7 @@ void	command_errors(char *errname,bool clear, bool stop)
 	if (clear)
 		clear_data(true);
 	if (stop)
-		exit(EXIT_FAILURE);
+		exit(127);
 }
 
 void unexpected_token_error(char *token)
@@ -65,7 +65,7 @@ void	clear_data(bool clear_history)
 	ft_strdel(&ms()->err_message);
 	ft_strdel(&ms()->cmd);
 	close_pipes();
-	ft_lstiter(ms()->commands, &close_fd);
+	/* ft_lstiter(ms()->commands, &close_fd); */
 	ft_lstclear(&ms()->tokens, &del_token);
 	ft_lstclear(&ms()->commands, &del_command);
 	if (access(".inputstream.txt", F_OK) != -1)

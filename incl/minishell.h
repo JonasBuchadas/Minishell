@@ -6,7 +6,7 @@
 /*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 10:04:11 by jocaetan          #+#    #+#             */
-/*   Updated: 2022/12/17 12:09:59 by fvarela          ###   ########.fr       */
+/*   Updated: 2022/12/22 14:05:41 by fvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,11 @@ typedef struct s_minishell
 	t_list			*commands;
 	int				last_fd_in;
 	int				last_fd_out;
-	int				last_error_cd;
 	int				exit;
 	unsigned int	last_i;
 	bool			on_read;
+	int				toplvl;
+	int				status;
 }			t_minishell;
 
 t_minishell	*ms(void);

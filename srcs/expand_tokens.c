@@ -32,6 +32,8 @@ void	*expand_token(void *elem)
 		{
 			expand_env(token, i);
 			i--;
+			if (!token->text[0])
+				break;
 		}
 	}
 	return ((void *)create_token(token->text, token->parse_code));
@@ -58,6 +60,11 @@ static void	expand_env(t_token *token, int i)
 	ft_strdel(&temp1);
 	i = ft_strlen(temp2);
 	len = ft_strlen(token->text);
+	if (token->text[start + 1] == '?')
+	{
+		i -= ft_strlen(env) - 2;
+		free(env);
+	}
 	temp1 = ft_substr(token->text, (unsigned int) i, (size_t)len - i);
 	ft_strdel(&token->text);
 	token->text = ft_strjoin(temp2, temp1);
@@ -77,8 +84,8 @@ static char	*expand_env_var(t_token *token, int i)
 	while (token->text[len] && token->text[len] != ' ')
 		len++;
 	temp1 = ft_substr(token->text, start, len);
-	if (ft_strequal(temp1, "?"))
-		env = ft_itoa(ms()->last_error_cd);
+	if (ft_strequal(temp1, "?") || temp1[0] == '?')
+		env = ft_itoa(ms()->status);
 	else
 		env = getenv(temp1);
 	ft_strdel(&temp1);

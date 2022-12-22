@@ -32,7 +32,8 @@ int	main(int argc, char **argv, char **envp)
 			create_commands();
 			exec_input();
 		}
-		waitpid(-1, NULL, 0);
+		waitpid(-1, &ms()->status, 0);
+		ms()->status = WEXITSTATUS(ms()->status);
 		clear_data(false);
 	}
 	clear_data(true);
@@ -48,6 +49,7 @@ static void	init_minishell(char **envp)
 	ms()->file_output = STDOUT_FILENO;
 	ms()->last_fd_in = STDIN_FILENO;
 	ms()->last_fd_out = STDOUT_FILENO;
+	ms()->toplvl = 1;
 	command_paths();
 }
 

@@ -11,6 +11,7 @@ void	ft_execbin(t_command *command)
 		program_errors("FORK", true, true);
 	if (ms()->pid_cmd == CHILD_PROCESS)
 	{
+		ms()->toplvl = 0;
 		redirect_io(command);
 		close_pipes();
 		if (access(command->command[0], F_OK) != ERROR)
