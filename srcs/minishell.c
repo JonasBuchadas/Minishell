@@ -33,7 +33,8 @@ int	main(int argc, char **argv, char **envp)
 			exec_input();
 		}
 		waitpid(-1, &ms()->status, 0);
-		ms()->status = WEXITSTATUS(ms()->status);
+		if (!ms()->toplvl)
+			ms()->status = WEXITSTATUS(ms()->status);
 		clear_data(false);
 	}
 	clear_data(true);

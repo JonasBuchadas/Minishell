@@ -6,7 +6,7 @@
 /*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 10:04:11 by jocaetan          #+#    #+#             */
-/*   Updated: 2022/12/22 14:05:41 by fvarela          ###   ########.fr       */
+/*   Updated: 2022/12/22 17:25:30 by fvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void		dup2_util(int read_end, int write_end);
 int			ft_isbt(t_command *cmd);
 void		ft_execbt(t_command *cmd);
 void		bt_echo(t_command	*cmd);
-void		bt_cd(t_command	*cmd);
+int			bt_cd(t_command	*cmd);
 void		bt_pwd(void);
 void		bt_env(void);
 void		bt_export(t_command *cmd);
