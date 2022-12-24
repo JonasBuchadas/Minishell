@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error_handling.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/24 15:55:02 by fvarela           #+#    #+#             */
+/*   Updated: 2022/12/24 15:55:04 by fvarela          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-void	command_errors(char *errname,bool clear, bool stop)
+void	command_errors(char *errname, bool clear, bool stop)
 {
 	char	*prompt_line;
 	char	*full_line;
@@ -17,7 +29,7 @@ void	command_errors(char *errname,bool clear, bool stop)
 		exit(EXIT_COMMAND);
 }
 
-void unexpected_token_error(char *token)
+void	unexpected_token_error(char *token)
 {
 	char	*error_msg;
 	char	*temp;
@@ -31,9 +43,9 @@ void unexpected_token_error(char *token)
 	program_errors(ms()->err_message, true, true);
 }
 
-void file_error(char *error, char *filename, bool stop)
+void	file_error(char *error, char *filename, bool stop)
 {
-	char *line;
+	char	*line;
 
 	if (ft_strequal(error, "NO FILE"))
 		line = ft_strjoin("minishell: no such file or directory: ", filename);
@@ -84,7 +96,7 @@ void	del_token(void *elem)
 	ft_memdel(&elem);
 }
 
-void del_token_list(void *elem)
+void	del_token_list(void *elem)
 {
 	ft_memdel(&elem);
 }
@@ -99,13 +111,13 @@ void	print_token(void *elem)
 	printf("Token :%s\n", token->text);
 }
 
-void print_command(void *elem)
+void	print_command(void *elem)
 {
 	t_command	*command_elem;
 	char		**command;
 
 	if (!elem)
-		return;
+		return ;
 	command_elem = (t_command *)elem;
 	command = command_elem->command;
 	while (*command)
@@ -116,18 +128,18 @@ void print_command(void *elem)
 	printf("\n");
 }
 
-void del_command(void *elem)
+void	del_command(void *elem)
 {
-	t_command *command;
+	t_command	*command;
 
 	command = (t_command *)elem;
 	ft_strarray_clear(&command->command);
 	ft_memdel(&elem);
 }
 
-void close_fd(void *elem)
+void	close_fd(void *elem)
 {
-	t_command *command;
+	t_command	*command;
 
 	command = (t_command *)elem;
 	if (!(command->in_fd == -1 || command->in_fd == STDIN_FILENO))
@@ -136,14 +148,13 @@ void close_fd(void *elem)
 		close(command->out_fd);
 }
 
-void close_pipes(void)
+void	close_pipes(void)
 {
-	int i;
+	int	i;
 
 	if (!ms()->pipes)
-		return;
+		return ;
 	i = -1;
-	if (ms()->pid_cmd == CHILD_PROCESS)
 	while (++i < ms()->n_pipes)
 	{
 		close(ms()->pipes[i]);

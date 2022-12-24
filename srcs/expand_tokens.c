@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand_tokens.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/24 16:07:04 by fvarela           #+#    #+#             */
+/*   Updated: 2022/12/24 16:07:05 by fvarela          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static void		expand_env(t_token *token, int i);
@@ -6,7 +18,7 @@ static t_token	*create_token(char *text, int code);
 
 void	expand_tokens(void)
 {
-	t_list *tokens;
+	t_list	*tokens;
 
 	tokens = ft_lstmap(ms()->tokens, &expand_token, &del_token);
 	if (!tokens)
@@ -33,7 +45,7 @@ void	*expand_token(void *elem)
 			expand_env(token, i);
 			i--;
 			if (!token->text[0])
-				break;
+				break ;
 		}
 	}
 	return ((void *)create_token(token->text, token->parse_code));

@@ -6,7 +6,7 @@
 /*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 10:04:11 by jocaetan          #+#    #+#             */
-/*   Updated: 2022/12/22 18:25:58 by fvarela          ###   ########.fr       */
+/*   Updated: 2022/12/24 16:14:14 by fvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ typedef struct s_command
 	char	**command;
 	int		in_fd;
 	int		out_fd;
-/* int		*pipes; */
 	bool	pipe;
 }	t_command;
 
@@ -126,7 +125,6 @@ int			bt_unset(t_command *cmd);
 void		bt_exit(void);
 /* AUX */
 int			ft_strcmp(const char *s1, const char *s2);
-void	ft_resetfds(void);
 /* ENV */
 char		**init_env(char **env, int ra);
 char		*get_env(char	*str);

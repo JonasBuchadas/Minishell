@@ -6,7 +6,7 @@
 /*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 07:52:37 by fvarela           #+#    #+#             */
-/*   Updated: 2022/12/22 18:29:41 by fvarela          ###   ########.fr       */
+/*   Updated: 2022/12/24 16:11:45 by fvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 
 void	sg_int(int sghandler)
 {
-	/* CTRL+C handler. Should stop execution & return a new line */
 	(void)sghandler;
 	ms()->exit = 3;
-		write(2, "\n", 1);
+	write(2, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	if (ms()->on_read)
@@ -27,7 +26,6 @@ void	sg_int(int sghandler)
 
 void	sg_quit(int sghandler)
 {
-	/* CTRL+\ handler. Should do NOTHING */
 	(void)sghandler;
 	ft_putstr_fd("SIGQUIT received\n", 2);
 }

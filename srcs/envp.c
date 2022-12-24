@@ -6,7 +6,7 @@
 /*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 05:04:42 by fvarela           #+#    #+#             */
-/*   Updated: 2022/12/17 12:05:11 by fvarela          ###   ########.fr       */
+/*   Updated: 2022/12/24 15:50:32 by fvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	**init_env(char **env, int ra)
 
 char	*get_env(char	*str)
 {
-	int	c;
+	int		c;
 	size_t	len;
 
 	c = 0;
@@ -54,31 +54,31 @@ char	*get_env(char	*str)
 
 void	set_env(char *env, char *value)
 {
-	int		c;
-	int		f;
-	char	**temp;
+	int			c;
+	int			f;
+	char		**temp;
+	t_minishell	*mini;
 
 	c = 0;
 	f = 0;
-	while (ms()->envp[c])
+	mini = ms();
+	while (mini->envp[c])
 	{
-		if (ft_strncmp(ms()->envp[c], env, ft_strlen(env)) == 0)
+		if (ft_strncmp(mini->envp[c], env, ft_strlen(env)) == 0)
 		{
-			free(ms()->envp[c]);
+			free(mini->envp[c]);
 			f = 1;
-			break ;
+			mini->envp[c] = ft_strjoin(env, value);
 		}
 		c++;
 	}
 	if (!f)
 	{
 		temp = ms()->envp;
-		ms()->envp = init_env(ms()->envp, 1);
+		mini->envp = init_env(mini->envp, 1);
 		ft_strarray_clear(&temp);
+		mini->envp[c] = ft_strjoin(env, value);
 	}
-	while (ms()->envp[c] && !f)
-		c++;
-	ms()->envp[c] = ft_strjoin(env, value);
 }
 
 char	*get_env_name(char	*str)

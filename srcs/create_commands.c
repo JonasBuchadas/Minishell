@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_commands.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/24 15:32:34 by fvarela           #+#    #+#             */
+/*   Updated: 2022/12/24 15:33:45 by fvarela          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static char		*join_token(char *cmd, char *str);
 static t_list	*redirect_io(t_list *tokens, char *redirect);
 static char		*add_command(char *cmd, bool pipe);
 
-void create_commands(void)
+void	create_commands(void)
 {
 	char	*command;
 	t_list	*current;
@@ -14,7 +26,7 @@ void create_commands(void)
 	current = ms()->tokens;
 	while (current)
 	{
-	ms()->last_fd_out = STDOUT_FILENO;
+		ms()->last_fd_out = STDOUT_FILENO;
 		token = (t_token *)current->content;
 		if (token->parse_code != METACHAR)
 			command = join_token(command, token->text);
@@ -26,7 +38,6 @@ void create_commands(void)
 	}
 	command = add_command(command, false);
 	ft_strdel(&command);
-	/* ft_lstiter(ms()->commands, print_command); */
 }
 
 static char	*join_token(char *cmd, char *str)
@@ -34,11 +45,11 @@ static char	*join_token(char *cmd, char *str)
 	char	*temp;
 
 	temp = ft_strjoin(cmd, str);
-		ft_strdel(&cmd);
-	return temp;
+	ft_strdel(&cmd);
+	return (temp);
 }
 
-static t_list *redirect_io(t_list *tokens, char *redirect)
+static t_list	*redirect_io(t_list *tokens, char *redirect)
 {
 	t_list	*next;
 	t_token	*token;
@@ -63,7 +74,7 @@ static t_list *redirect_io(t_list *tokens, char *redirect)
 	return (next);
 }
 
-static char *add_command(char *cmd, bool create_pipe)
+static char	*add_command(char *cmd, bool create_pipe)
 {
 	t_command	*command;
 
@@ -87,5 +98,5 @@ static char *add_command(char *cmd, bool create_pipe)
 	ms()->file_input = STDIN_FILENO;
 	ms()->file_output = STDOUT_FILENO;
 	ft_strdel(&cmd);
-	return (char *)protected_calloc(1, 1);
+	return ((char *)protected_calloc(1, 1));
 }

@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_tokens.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/24 15:35:16 by fvarela           #+#    #+#             */
+/*   Updated: 2022/12/24 15:35:17 by fvarela          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	handle_double_quotes(int i);
 static int	handle_single_quotes(int i);
 static int	handle_metachar(int i);
-static void add_token(unsigned int start, int len, int parse_code);
+static void	add_token(unsigned int start, int len, int parse_code);
 
 // Will travel the input and create tokens within "", '' or [space]
-void create_tokens(void)
+void	create_tokens(void)
 {
 	int			i;
 
@@ -20,7 +32,8 @@ void create_tokens(void)
 			i = handle_single_quotes(i);
 		if (is_metachar(ms()->input[i]))
 			i = handle_metachar(i);
-		if (!(ms()->input[i] == '\"' || ms()->input[i] == '\'') && ms()->input[i])
+		if (!(ms()->input[i] == '\"' || \
+		ms()->input[i] == '\'') && ms()->input[i])
 			i++;
 	}
 	handle_metachar(i);
@@ -76,9 +89,9 @@ static int	handle_single_quotes(int i)
 
 //Handle space has to create a token with the lenght
 //of last token index and the current index
-static int handle_metachar(int i)
+static int	handle_metachar(int i)
 {
-	int len;
+	int	len;
 
 	len = i - ms()->last_i;
 	if (len > 0)
@@ -101,11 +114,11 @@ static int handle_metachar(int i)
 	return (i);
 }
 
-static void add_token(unsigned int start, int len, int parse_code)
+static void	add_token(unsigned int start, int len, int parse_code)
 {
-	t_token *token;
-	char *text;
-	char *temp;
+	t_token	*token;
+	char	*text;
+	char	*temp;
 
 	text = ft_substr(ms()->input, start, len);
 	if (parse_code == SINGLE_QUOTES || parse_code == DOUBLE_QUOTES)

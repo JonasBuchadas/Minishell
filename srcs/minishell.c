@@ -1,13 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/24 16:11:18 by fvarela           #+#    #+#             */
+/*   Updated: 2022/12/24 16:11:19 by fvarela          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static void	init_minishell(char **envp);
-static void command_paths(void);
+static void	command_paths(void);
 
 int	main(int argc, char **argv, char **envp)
 {
 	(void) argc;
 	(void) argv;
-
 	init_minishell(envp);
 	sg_init();
 	while (1)
@@ -42,25 +53,30 @@ int	main(int argc, char **argv, char **envp)
 
 static void	init_minishell(char **envp)
 {
-	ms()->envp = init_env(envp, 0);
-	ms()->exit = 0;
-	ms()->file_input = STDIN_FILENO;
-	ms()->file_output = STDOUT_FILENO;
-	ms()->last_fd_in = STDIN_FILENO;
-	ms()->last_fd_out = STDOUT_FILENO;
-	ms()->toplvl = 1;
+	t_minishell	*mini;
+
+	mini = ms();
+	mini->envp = init_env(envp, 0);
+	mini->exit = 0;
+	mini->file_input = STDIN_FILENO;
+	mini->file_output = STDOUT_FILENO;
+	mini->last_fd_in = STDIN_FILENO;
+	mini->last_fd_out = STDOUT_FILENO;
+	mini->toplvl = 1;
 	command_paths();
 }
 
-static void command_paths(void)
+static void	command_paths(void)
 {
-	int i;
+	int			i;
+	t_minishell	*mini;
 
 	i = -1;
+	mini = ms();
 	while (ms()->envp[++i])
 	{
 		if (!ft_strncmp(ms()->envp[i], "PATH=", 5))
-			break;
+			break ;
 	}
-	ms()->env_paths = ft_split(ms()->envp[i] + 5, ':');
+	mini->env_paths = ft_split(ms()->envp[i] + 5, ':');
 }

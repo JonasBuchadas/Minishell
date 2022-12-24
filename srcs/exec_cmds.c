@@ -1,17 +1,29 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_cmds.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/24 15:59:42 by fvarela           #+#    #+#             */
+/*   Updated: 2022/12/24 16:04:04 by fvarela          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-static void create_pipes(void);
-static char *find_command(char *cmd, char **paths);
-static void redirect_io(t_command *command);
+static void	create_pipes(void);
+static char	*find_command(char *cmd, char **paths);
+static void	redirect_io(t_command *command);
 
 void	ft_execbin(t_command *command)
 {
-	ms()->toplvl = 0;
-	ms()->pid_cmd = fork();
+	char	*fc;
+
 	if (ms()->pid_cmd == ERROR)
 		program_errors("FORK", true, true);
 	redirect_io(command);
-	if(ms()->pid_cmd != CHILD_PROCESS && command->pipe)
+	if (ms()->pid_cmd != CHILD_PROCESS && command->pipe)
 		close(ms()->pipes[1 + (command->cmd_nu * 2)]);
 	else if (command->pipe)
 		close(ms()->pipes[0 + (command->cmd_nu * 2)]);
@@ -21,8 +33,10 @@ void	ft_execbin(t_command *command)
 	{
 		if (access(command->command[0], F_OK) != ERROR)
 			execve(command->command[0], command->command, ms()->envp);
-		ms()->cmd = find_command(command->command[0], ms()->env_paths);
-		if ((!ms()->cmd || access(ms()->cmd, F_OK) == ERROR) && !ft_isbt(command))
+		fc = find_command(command->command[0], ms()->env_paths);
+		ms()->cmd = fc;
+		if ((!ms()->cmd || access(ms()->cmd, F_OK) == ERROR) && \
+		!ft_isbt(command))
 			command_errors(command->command[0], true, true);
 		if (ft_isbt(command))
 			ft_execbt(command);
@@ -31,7 +45,7 @@ void	ft_execbin(t_command *command)
 	}
 }
 
-void exec_input(void)
+void	exec_input(void)
 {
 	t_command	*command;
 	t_list		*current;
@@ -44,15 +58,19 @@ void exec_input(void)
 		if (ft_isbt(command) && ms()->n_pipes <= 0)
 			ft_execbt(command);
 		else
+		{
+			ms()->toplvl = 0;
+			ms()->pid_cmd = fork();
 			ft_execbin(command);
+		}
 		current = current->next;
 	}
 }
 
-static void redirect_io(t_command *command)
+static void	redirect_io(t_command *command)
 {
-	int nu_cmds;
-	int cmd_nu;
+	int	nu_cmds;
+	int	cmd_nu;
 
 	if (ms()->pid_cmd == CHILD_PROCESS)
 	{
@@ -65,34 +83,34 @@ static void redirect_io(t_command *command)
 		else if (cmd_nu == nu_cmds - 1)
 			dup2_util(ms()->pipes[2 * cmd_nu - 2], command->out_fd);
 		else
-			dup2_util(ms()->pipes[2 * cmd_nu - 2], ms()->pipes[2 * cmd_nu + WRITE_END]);
+			dup2_util(ms()->pipes[2 * cmd_nu - 2], \
+			ms()->pipes[2 * cmd_nu + WRITE_END]);
 	}
 }
 
-static void create_pipes(void)
+static void	create_pipes(void)
 {
-	int		i;
-	t_list	*commands;
+	int			i;
+	t_list		*commands;
+	t_minishell	*mini;
 
-	commands = ms()->commands;
-	ms()->n_pipes = 2 * (ft_lstsize(commands) - 1);
-	ms()->pipes = (int *)protected_calloc(ms()->n_pipes, sizeof(int));
+	mini = ms();
+	commands = mini->commands;
+	mini->n_pipes = 2 * (ft_lstsize(commands) - 1);
+	mini->pipes = (int *)protected_calloc(mini->n_pipes, sizeof(int));
 	i = -1;
-	while (++i < ft_lstsize(ms()->commands) - 1)
+	while (++i < ft_lstsize(mini->commands) - 1)
 	{
-		if (pipe(ms()->pipes + 2 * i) == ERROR)
+		if (pipe(mini->pipes + 2 * i) == ERROR)
 			program_errors("OPENING PIPES", true, true);
 	}
 }
 
-static char *find_command(char *cmd, char **paths)
+static char	*find_command(char *cmd, char **paths)
 {
-	/* If it's not a file and it's not a binary in PATH,
-	paths gets freed without being reinitialzed,
-	thus throwing an error on consecutive commands*/
-	char *path;
-	char *tmp;
-	size_t i;
+	char	*path;
+	char	*tmp;
+	size_t	i;
 
 	i = 0;
 	while (paths[i])

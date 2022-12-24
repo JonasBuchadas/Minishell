@@ -6,12 +6,10 @@
 /*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 00:16:35 by fvarela           #+#    #+#             */
-/*   Updated: 2022/12/17 12:03:05 by fvarela          ###   ########.fr       */
+/*   Updated: 2022/12/24 16:12:55 by fvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-/* TODO: Requires validation on invalid prompts ("var=", "var") */
 #include "minishell.h"
 
 void	bt_sort_swap(char ***envp, int c1, int c2, int *c)

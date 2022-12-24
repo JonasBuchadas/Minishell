@@ -6,7 +6,7 @@
 /*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 23:49:19 by fvarela           #+#    #+#             */
-/*   Updated: 2022/12/22 18:58:37 by fvarela          ###   ########.fr       */
+/*   Updated: 2022/12/24 16:12:27 by fvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	bt_cd_error(char **cmd)
 {
 	char	*error;
+
 	if (cmd[1] && ft_strcmp(cmd[1], "-") != 0)
 		error = ft_strdup(strerror(errno));
 	else if (cmd[1] && ft_strcmp(cmd[1], "-") == 0)

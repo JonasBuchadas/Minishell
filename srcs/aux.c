@@ -1,23 +1,36 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   aux.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/24 15:30:06 by fvarela           #+#    #+#             */
+/*   Updated: 2022/12/24 15:31:31 by fvarela          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-bool is_metachar(char c)
+bool	is_metachar(char c)
 {
-	if (c == ' ' || c == '\n' || c == '\t' || c == '|' || c == '&' || c == ';' || c == '(' || c == ')' || c == '<' || c == '>')
-		return true;
-	return false;
+	if (c == ' ' || c == '\n' || c == '\t' || c == '|' || \
+	c == '&' || c == ';' || c == '(' || c == ')' || c == '<' || c == '>')
+		return (true);
+	return (false);
 }
 
-void *protected_calloc(size_t count, size_t size)
+void	*protected_calloc(size_t count, size_t size)
 {
-	void *ptr;
+	void	*ptr;
 
 	ptr = ft_calloc(count, size);
 	if (!ptr)
 		program_errors("MALLOC", true, true);
-	return ptr;
+	return (ptr);
 }
 
-void dup2_util(int read_end, int write_end)
+void	dup2_util(int read_end, int write_end)
 {
 	if (dup2(read_end, STDIN_FILENO) == ERROR)
 		program_errors("DUP2", true, true);

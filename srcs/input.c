@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   input.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/24 16:08:34 by fvarela           #+#    #+#             */
+/*   Updated: 2022/12/24 16:08:36 by fvarela          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-static void init_here_doc(int file);
+static void	init_here_doc(int file);
 
-int read_file(char *filename)
+int	read_file(char *filename)
 {
-	int fd_input;
+	int	fd_input;
 
 	if (access(filename, F_OK) == ERROR)
 	{
@@ -20,33 +32,33 @@ int read_file(char *filename)
 		fd_input = open(filename, O_RDONLY);
 	if (fd_input == ERROR)
 		program_errors("OPENING INPUT FILE", true, true);
-	return fd_input;
+	return (fd_input);
 }
 
-int write_file(char *filename)
+int	write_file(char *filename)
 {
-	int fd_output;
+	int	fd_output;
 
 	fd_output = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd_output == ERROR)
 		file_error("NO FILE", filename, false);
-	return fd_output;
+	return (fd_output);
 }
 
-int append_file(char *filename)
+int	append_file(char *filename)
 {
-	int fd_output;
+	int	fd_output;
 
 	fd_output = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd_output == ERROR)
 		file_error("NO FILE", filename, false);
-	return fd_output;
+	return (fd_output);
 }
 
-int here_doc(char *limiter)
+int	here_doc(char *limiter)
 {
-	int file;
-	int fd_input;
+	int	file;
+	int	fd_input;
 
 	file = open(".inputstream.txt", O_WRONLY | O_CREAT, 0644);
 	if (file == ERROR)
@@ -57,13 +69,13 @@ int here_doc(char *limiter)
 	fd_input = open(".inputstream.txt", O_RDONLY);
 	if (fd_input == ERROR)
 		file_error("NO FILE", ".inputstream.txt", false);
-	return fd_input;
+	return (fd_input);
 }
 
-static void init_here_doc(int file)
+static void	init_here_doc(int file)
 {
-	char *line;
-	char *tmp;
+	char	*line;
+	char	*tmp;
 
 	tmp = ft_strjoin(ms()->limiter, "\n");
 	while (1)
@@ -73,7 +85,7 @@ static void init_here_doc(int file)
 		if (line)
 		{
 			if (ft_strequal(tmp, line))
-				break;
+				break ;
 			ft_putstr_fd(line, file);
 			ft_strdel(&line);
 		}
