@@ -6,7 +6,7 @@
 /*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 23:49:19 by fvarela           #+#    #+#             */
-/*   Updated: 2022/12/22 17:51:46 by fvarela          ###   ########.fr       */
+/*   Updated: 2022/12/22 18:58:37 by fvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	bt_cd_error(char **cmd)
 	if (cmd[1] && ft_strcmp(cmd[1], "-") != 0)
 		write(2, "\n", 1);
 	free(error);
-	return (1);
+	return (EXIT_FAILURE);
 }
 
 int	bt_setpwd(int old)
@@ -56,7 +56,6 @@ int	bt_cd(t_command	*cmd)
 		dir = get_env("OLDPWD=");
 	else
 		dir = get_env("HOME=");
-	printf("Got dir: %s\n", dir);
 	if (!dir)
 		return (bt_cd_error(cmd->command));
 	else
@@ -68,5 +67,5 @@ int	bt_cd(t_command	*cmd)
 		else
 			return (bt_cd_error(cmd->command));
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }

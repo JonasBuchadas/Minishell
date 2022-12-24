@@ -26,7 +26,7 @@ void create_commands(void)
 	}
 	command = add_command(command, false);
 	ft_strdel(&command);
-	ft_lstiter(ms()->commands, print_command);
+	/* ft_lstiter(ms()->commands, print_command); */
 }
 
 static char	*join_token(char *cmd, char *str)

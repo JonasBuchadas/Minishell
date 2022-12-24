@@ -26,15 +26,13 @@ int	main(int argc, char **argv, char **envp)
 		else
 		{
 			create_tokens();
-			ft_lstiter(ms()->tokens, print_token);
 			expand_tokens();
-			ft_lstiter(ms()->tokens, print_token);
 			create_commands();
 			exec_input();
 		}
-		waitpid(-1, &ms()->status, 0);
 		if (!ms()->toplvl)
 			ms()->status = WEXITSTATUS(ms()->status);
+		ms()->toplvl = 1;
 		clear_data(false);
 	}
 	clear_data(true);

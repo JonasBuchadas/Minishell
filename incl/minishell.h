@@ -6,7 +6,7 @@
 /*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 10:04:11 by jocaetan          #+#    #+#             */
-/*   Updated: 2022/12/22 17:25:30 by fvarela          ###   ########.fr       */
+/*   Updated: 2022/12/22 18:25:58 by fvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@
 # define HERE_DOC 3
 
 # define PROMPT "minishell: "
+# define EXIT_COMMAND 127
+# define EXIT_SIGINT 130
+# define EXIT_SIGQUIT 131
 
 typedef struct s_token
 {
@@ -114,9 +117,9 @@ void		dup2_util(int read_end, int write_end);
 /* BUILTINS */
 int			ft_isbt(t_command *cmd);
 void		ft_execbt(t_command *cmd);
-void		bt_echo(t_command	*cmd);
+int			bt_echo(t_command	*cmd);
 int			bt_cd(t_command	*cmd);
-void		bt_pwd(void);
+int			bt_pwd(void);
 void		bt_env(void);
 void		bt_export(t_command *cmd);
 int			bt_unset(t_command *cmd);

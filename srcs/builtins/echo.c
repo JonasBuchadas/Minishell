@@ -6,13 +6,13 @@
 /*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 23:22:26 by fvarela           #+#    #+#             */
-/*   Updated: 2022/12/14 01:07:56 by fvarela          ###   ########.fr       */
+/*   Updated: 2022/12/22 18:04:52 by fvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	bt_echo(t_command	*cmd)
+int	bt_echo(t_command	*cmd)
 {
 	int	argc;
 	int	n_flag;
@@ -36,4 +36,5 @@ void	bt_echo(t_command	*cmd)
 	}
 	if (!n_flag)
 		write(1, "\n", 1);
+	return (0);
 }

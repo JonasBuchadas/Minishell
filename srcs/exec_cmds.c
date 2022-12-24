@@ -10,10 +10,15 @@ void	ft_execbin(t_command *command)
 	ms()->pid_cmd = fork();
 	if (ms()->pid_cmd == ERROR)
 		program_errors("FORK", true, true);
-	if (ms()->pid_cmd == CHILD_PROCESS)
+	redirect_io(command);
+	if(ms()->pid_cmd != CHILD_PROCESS && command->pipe)
+		close(ms()->pipes[1 + (command->cmd_nu * 2)]);
+	else if (command->pipe)
+		close(ms()->pipes[0 + (command->cmd_nu * 2)]);
+	if (ms()->pid_cmd != CHILD_PROCESS)
+		waitpid(-1, &ms()->status, 0);
+	else
 	{
-		redirect_io(command);
-		close_pipes();
 		if (access(command->command[0], F_OK) != ERROR)
 			execve(command->command[0], command->command, ms()->envp);
 		ms()->cmd = find_command(command->command[0], ms()->env_paths);
@@ -49,16 +54,19 @@ static void redirect_io(t_command *command)
 	int nu_cmds;
 	int cmd_nu;
 
-	nu_cmds = ft_lstsize(ms()->commands);
-	cmd_nu = command->cmd_nu;
-	if (cmd_nu == 0 && command->pipe)
-		dup2_util(command->in_fd, ms()->pipes[0 + WRITE_END]);
-	else if (cmd_nu == 0 && !command->pipe)
-		dup2_util(command->in_fd, command->out_fd);
-	else if (cmd_nu == nu_cmds - 1)
-		dup2_util(ms()->pipes[2 * cmd_nu - 2], command->out_fd);
-	else
-		dup2_util(ms()->pipes[2 * cmd_nu - 2], ms()->pipes[2 * cmd_nu + WRITE_END]);
+	if (ms()->pid_cmd == CHILD_PROCESS)
+	{
+		nu_cmds = ft_lstsize(ms()->commands);
+		cmd_nu = command->cmd_nu;
+		if (cmd_nu == 0 && command->pipe)
+			dup2_util(command->in_fd, ms()->pipes[0 + WRITE_END]);
+		else if (cmd_nu == 0 && !command->pipe)
+			dup2_util(command->in_fd, command->out_fd);
+		else if (cmd_nu == nu_cmds - 1)
+			dup2_util(ms()->pipes[2 * cmd_nu - 2], command->out_fd);
+		else
+			dup2_util(ms()->pipes[2 * cmd_nu - 2], ms()->pipes[2 * cmd_nu + WRITE_END]);
+	}
 }
 
 static void create_pipes(void)
@@ -93,14 +101,10 @@ static char *find_command(char *cmd, char **paths)
 		path = ft_strjoin(tmp, cmd);
 		ft_strdel(&tmp);
 		if (access(path, F_OK) == 0)
-		{
-			/* ft_strarray_clear(&paths); */
 			return (path);
-		}
 		else
 			ft_strdel(&path);
 		i++;
 	}
-	/* ft_strarray_clear(&paths); */
 	return (NULL);
 }
