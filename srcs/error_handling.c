@@ -77,7 +77,6 @@ void	clear_data(bool clear_history)
 	ft_strdel(&ms()->limiter);
 	ft_strdel(&ms()->err_message);
 	ft_strdel(&ms()->cmd);
-	ft_strarray_clear(&ms()->env_paths);
 	close_pipes();
 	ft_lstclear(&ms()->tokens, &del_token);
 	ft_lstclear(&ms()->commands, &del_command);
