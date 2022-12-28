@@ -21,7 +21,7 @@ int	bt_echo(t_command	*cmd)
 	n_flag = 0;
 	while (cmd->command[argc] && cmd->command[argc][0] == '-')
 	{
-		if (ft_strcmp(cmd->command[argc], "-n") == 0)
+		if (ft_strequal(cmd->command[argc], "-n"))
 			n_flag = 1;
 		else
 			break ;

@@ -14,38 +14,38 @@
 
 int	ft_isbt(t_command	*cmd)
 {
-	if (ft_strcmp(cmd->command[0], "echo") == 0)
+	if (ft_strequal(cmd->command[0], "echo"))
 		return (1);
-	if (ft_strcmp(cmd->command[0], "cd") == 0)
+	if (ft_strequal(cmd->command[0], "cd"))
 		return (1);
-	if (ft_strcmp(cmd->command[0], "pwd") == 0)
+	if (ft_strequal(cmd->command[0], "pwd"))
 		return (1);
-	if (ft_strcmp(cmd->command[0], "export") == 0)
+	if (ft_strequal(cmd->command[0], "export"))
 		return (1);
-	if (ft_strcmp(cmd->command[0], "unset") == 0)
+	if (ft_strequal(cmd->command[0], "unset"))
 		return (1);
-	if (ft_strcmp(cmd->command[0], "env") == 0)
+	if (ft_strequal(cmd->command[0], "env"))
 		return (1);
-	if (ft_strcmp(cmd->command[0], "exit") == 0)
+	if (ft_strequal(cmd->command[0], "exit"))
 		return (1);
 	return (0);
 }
 
 void	ft_execbt(t_command *cmd)
 {
-	if (ft_strcmp(cmd->command[0], "echo") == 0)
+	if (ft_strequal(cmd->command[0], "echo"))
 		ms()->status = bt_echo(cmd);
-	if (ft_strcmp(cmd->command[0], "cd") == 0)
+	if (ft_strequal(cmd->command[0], "cd"))
 		ms()->status = bt_cd(cmd);
-	if (ft_strcmp(cmd->command[0], "pwd") == 0)
+	if (ft_strequal(cmd->command[0], "pwd"))
 		ms()->status = bt_pwd();
-	if (ft_strcmp(cmd->command[0], "export") == 0)
+	if (ft_strequal(cmd->command[0], "export"))
 		bt_export(cmd);
-	if (ft_strcmp(cmd->command[0], "unset") == 0)
+	if (ft_strequal(cmd->command[0], "unset"))
 		bt_unset(cmd);
-	if (ft_strcmp(cmd->command[0], "env") == 0)
+	if (ft_strequal(cmd->command[0], "env"))
 		bt_env();
-	if (ft_strcmp(cmd->command[0], "exit") == 0)
+	if (ft_strequal(cmd->command[0], "exit"))
 		bt_exit();
 	if (cmd->pipe || ms()->n_pipes > 0)
 		exit(ms()->status);

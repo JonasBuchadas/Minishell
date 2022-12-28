@@ -16,15 +16,15 @@ int	bt_cd_error(char **cmd)
 {
 	char	*error;
 
-	if (cmd[1] && ft_strcmp(cmd[1], "-") != 0)
+	if (cmd[1] && !ft_strequal(cmd[1], "-"))
 		error = ft_strdup(strerror(errno));
-	else if (cmd[1] && ft_strcmp(cmd[1], "-") == 0)
+	else if (cmd[1] && ft_strequal(cmd[1], "-"))
 		error = ft_strdup("OLDPWD is not set\n");
 	else
 		error = ft_strdup("HOME is not set\n");
 	ft_putstr_fd("minishell: cd: ", 2);
 	ft_putstr_fd(error, 2);
-	if (cmd[1] && ft_strcmp(cmd[1], "-") != 0)
+	if (cmd[1] && !ft_strequal(cmd[1], "-"))
 		write(2, "\n", 1);
 	free(error);
 	return (EXIT_FAILURE);
@@ -51,9 +51,9 @@ int	bt_cd(t_command	*cmd)
 
 	dir = NULL;
 	cd = 0;
-	if (cmd->command[1] && ft_strcmp(cmd->command[1], "-") != 0)
+	if (cmd->command[1] && !ft_strequal(cmd->command[1], "-"))
 		dir = cmd->command[1];
-	else if (cmd->command[1] && ft_strcmp(cmd->command[1], "-") == 0)
+	else if (cmd->command[1] && ft_strequal(cmd->command[1], "-"))
 		dir = get_env("OLDPWD=");
 	else
 		dir = get_env("HOME=");
