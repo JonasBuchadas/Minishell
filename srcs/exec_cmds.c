@@ -6,7 +6,7 @@
 /*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 15:59:42 by fvarela           #+#    #+#             */
-/*   Updated: 2022/12/24 16:04:04 by fvarela          ###   ########.fr       */
+/*   Updated: 2022/12/28 21:11:49 by fvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,32 +16,32 @@ static void	create_pipes(void);
 static char	*find_command(char *cmd, char **paths);
 static void	redirect_io(t_command *command);
 
-void	ft_execbin(t_command *command)
+void	ft_execbin(t_list *current)
 {
-	char	*fc;
+	t_command	*command;
 
-	if (ms()->pid_cmd == ERROR)
-		program_errors("FORK", true, true);
-	redirect_io(command);
-	if (ms()->pid_cmd != CHILD_PROCESS && command->pipe)
-		close(ms()->pipes[1 + (command->cmd_nu * 2)]);
-	else if (command->pipe)
-		close(ms()->pipes[0 + (command->cmd_nu * 2)]);
-	if (ms()->pid_cmd != CHILD_PROCESS)
-		waitpid(-1, &ms()->status, 0);
-	else
+	create_pipes();
+	while (current)
 	{
-		if (access(command->command[0], F_OK) != ERROR)
-			execve(command->command[0], command->command, ms()->envp);
-		fc = find_command(command->command[0], ms()->env_paths);
-		ms()->cmd = fc;
-		if ((!ms()->cmd || access(ms()->cmd, F_OK) == ERROR) && \
-		!ft_isbt(command))
-			command_errors(command->command[0], true, true);
-		if (ft_isbt(command))
-			ft_execbt(command);
-		else
-			execve(ms()->cmd, command->command, ms()->envp);
+		command = (t_command *)current->content;
+		ms()->pid_cmd = fork();
+		if (ms()->pid_cmd == ERROR)
+			program_errors("FORK", true, true);
+		if (ms()->pid_cmd == CHILD_PROCESS)
+		{
+			redirect_io(command);
+			close_pipes();
+			if (access(command->command[0], F_OK) != ERROR)
+				execve(command->command[0], command->command, ms()->envp);
+			ms()->cmd = find_command(command->command[0], ms()->env_paths);
+			if ((!ms()->cmd || access(ms()->cmd, F_OK) == ERROR) && !ft_isbt(command))
+				command_errors(command->command[0], true, true);
+			if (ft_isbt(command))
+				ft_execbt(command);
+			else
+				execve(ms()->cmd, command->command, ms()->envp);
+		}
+		current = current->next;
 	}
 }
 
@@ -50,20 +50,19 @@ void	exec_input(void)
 	t_command	*command;
 	t_list		*current;
 
-	create_pipes();
 	current = ms()->commands;
-	while (current)
+	command = (t_command *)current->content;
+	if (ft_isbt(command) && !command->pipe)
 	{
-		command = (t_command *)current->content;
-		if (ft_isbt(command) && ms()->n_pipes <= 0)
-			ft_execbt(command);
-		else
-		{
-			ms()->toplvl = 0;
-			ms()->pid_cmd = fork();
-			ft_execbin(command);
-		}
-		current = current->next;
+		redirect_io(command);
+		ft_execbt(command);
+		dup2(ms()->d_in, 0);
+		dup2(ms()->d_out, 1);
+	}
+	else
+	{
+		ms()->toplvl = 0;
+		ft_execbin(current);
 	}
 }
 
@@ -76,9 +75,9 @@ static void	redirect_io(t_command *command)
 	{
 		nu_cmds = ft_lstsize(ms()->commands);
 		cmd_nu = command->cmd_nu;
-		if (cmd_nu == 0 && command->pipe)
+		if (cmd_nu == 0 && command->pipe && command->out_fd == STDOUT_FILENO)
 			dup2_util(command->in_fd, ms()->pipes[0 + WRITE_END]);
-		else if (cmd_nu == 0 && !command->pipe)
+		else if (cmd_nu == 0 && (!command->pipe || command->out_fd != STDOUT_FILENO))
 			dup2_util(command->in_fd, command->out_fd);
 		else if (cmd_nu == nu_cmds - 1)
 			dup2_util(ms()->pipes[2 * cmd_nu - 2], command->out_fd);

@@ -6,7 +6,7 @@
 /*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 16:11:18 by fvarela           #+#    #+#             */
-/*   Updated: 2022/12/24 16:11:19 by fvarela          ###   ########.fr       */
+/*   Updated: 2022/12/28 21:12:10 by fvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,17 @@ int	main(int argc, char **argv, char **envp)
 			create_commands();
 			exec_input();
 		}
-		if (!ms()->toplvl)
+		waitpid(-1, &ms()->status, 0);
+		if (!ms()->toplvl && !ms()->exit)
 			ms()->status = WEXITSTATUS(ms()->status);
+		else
+			ms()->status = ms()->exit;
+		ms()->exit = 0;
 		ms()->toplvl = 1;
 		clear_data(false);
 	}
 	clear_data(true);
 	ft_strarray_clear(&ms()->envp);
-	ft_strarray_clear(&ms()->env_paths);
 	return (EXIT_SUCCESS);
 }
 
@@ -61,8 +64,8 @@ static void	init_minishell(char **envp)
 	mini->exit = 0;
 	mini->file_input = STDIN_FILENO;
 	mini->file_output = STDOUT_FILENO;
-	mini->last_fd_in = STDIN_FILENO;
-	mini->last_fd_out = STDOUT_FILENO;
+	mini->d_in = dup(STDIN_FILENO);
+	mini->d_out = dup(STDOUT_FILENO);
 	mini->toplvl = 1;
 	command_paths();
 }

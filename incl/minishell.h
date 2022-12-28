@@ -6,7 +6,7 @@
 /*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 10:04:11 by jocaetan          #+#    #+#             */
-/*   Updated: 2022/12/24 16:14:14 by fvarela          ###   ########.fr       */
+/*   Updated: 2022/12/28 21:11:03 by fvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <stddef.h>
 # include <limits.h>
 # include <signal.h>
+#include <fcntl.h>
 
 // Parse Codes
 # define NORMAL 0
@@ -58,6 +59,7 @@ typedef struct s_command
 	int		in_fd;
 	int		out_fd;
 	bool	pipe;
+	bool	redirect;
 }	t_command;
 
 typedef struct s_minishell
@@ -76,8 +78,8 @@ typedef struct s_minishell
 	char			*input;
 	t_list			*tokens;
 	t_list			*commands;
-	int				last_fd_in;
-	int				last_fd_out;
+	int				d_in;
+	int				d_out;
 	int				exit;
 	unsigned int	last_i;
 	bool			on_read;
