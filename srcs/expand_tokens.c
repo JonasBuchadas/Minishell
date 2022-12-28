@@ -12,8 +12,8 @@
 
 #include "minishell.h"
 
-static void		expand_env(t_token *token, int i);
-static char		*expand_env_var(t_token *token, int i);
+static void		expand_env(t_token *token, int i, int len);
+static char		*expand_env_var(t_token *token, int i, int env_len);
 static t_token	*create_token(char *text, int code);
 
 void	expand_tokens(void)
@@ -31,6 +31,8 @@ void	*expand_token(void *elem)
 {
 	t_token	*token;
 	int		i;
+	int		j;
+	int		len;
 
 	if (!elem)
 		program_errors("MALLOC", true, true);
@@ -42,7 +44,11 @@ void	*expand_token(void *elem)
 	{
 		if (token->text[i] == '$')
 		{
-			expand_env(token, i);
+			len = 0;
+			j = i;
+			while (token->text[++j] && token->text[j] != ' ' && token->text[j] != '$')
+				len++;
+			expand_env(token, i, len);
 			i--;
 			if (!token->text[0])
 				break ;
@@ -51,50 +57,40 @@ void	*expand_token(void *elem)
 	return ((void *)create_token(token->text, token->parse_code));
 }
 
-static void	expand_env(t_token *token, int i)
+static void	expand_env(t_token *token, int i, int env_len)
 {
-	size_t			len;
 	unsigned int	start;
 	char			*temp1;
 	char			*temp2;
 	char			*env;
 
-	env = expand_env_var(token, i);
+	env = expand_env_var(token, i, env_len);
 	if (!env)
-	{
-		ft_strdel(&token->text);
-		token->text = (char *)protected_calloc(1, 1);
-		return ;
-	}
+		env = (char *)protected_calloc(1, 1);
 	start = (unsigned int)i++;
 	temp1 = ft_substr(token->text, 0, start);
 	temp2 = ft_strjoin(temp1, env);
 	ft_strdel(&temp1);
-	i = ft_strlen(temp2);
-	len = ft_strlen(token->text);
+	i += env_len;
 	if (token->text[start + 1] == '?')
 	{
 		i -= ft_strlen(env) - 2;
 		free(env);
 	}
-	temp1 = ft_substr(token->text, (unsigned int) i, (size_t)len - i);
+	temp1 = ft_substr(token->text, (unsigned int) i, (size_t)env_len - i);
 	ft_strdel(&token->text);
 	token->text = ft_strjoin(temp2, temp1);
 	ft_strdel(&temp1);
 	ft_strdel(&temp2);
 }
 
-static char	*expand_env_var(t_token *token, int i)
+static char	*expand_env_var(t_token *token, int i, int len)
 {
-	size_t			len;
 	unsigned int	start;
 	char			*temp1;
 	char			*env;
 
 	start = (unsigned int)i + 1;
-	len = start;
-	while (token->text[len] && token->text[len] != ' ')
-		len++;
 	temp1 = ft_substr(token->text, start, len);
 	if (ft_strequal(temp1, "?") || temp1[0] == '?')
 		env = ft_itoa(ms()->status);
