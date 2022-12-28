@@ -46,7 +46,7 @@ void	*expand_token(void *elem)
 		{
 			len = 0;
 			j = i;
-			while (token->text[++j] && token->text[j] != ' ' && token->text[j] != '$')
+			while (token->text[++j] && token->text[j] != ' ' && token->text[j] != '$' && token->text[j] != '=')
 				len++;
 			expand_env(token, i, len);
 			i--;
