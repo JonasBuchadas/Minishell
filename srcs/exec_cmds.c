@@ -55,6 +55,7 @@ void	exec_input(void)
 	if (ft_isbt(command) && !command->pipe)
 	{
 		redirect_io(command);
+		close_pipes();
 		ft_execbt(command);
 		dup2(ms()->d_in, 0);
 		dup2(ms()->d_out, 1);
