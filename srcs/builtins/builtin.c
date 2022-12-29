@@ -6,7 +6,7 @@
 /*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 22:59:36 by fvarela           #+#    #+#             */
-/*   Updated: 2022/12/22 18:58:43 by fvarela          ###   ########.fr       */
+/*   Updated: 2022/12/29 22:30:57 by fvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ void	ft_execbt(t_command *cmd)
 		bt_env();
 	if (ft_strequal(cmd->command[0], "exit"))
 		bt_exit();
-	if (cmd->pipe || ms()->n_pipes > 0)
+	if (cmd->pipe || ft_lstsize(ms()->commands) > 1)
 		exit(ms()->status);
 }
