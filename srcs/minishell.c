@@ -6,7 +6,7 @@
 /*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 16:11:18 by fvarela           #+#    #+#             */
-/*   Updated: 2022/12/28 21:12:10 by fvarela          ###   ########.fr       */
+/*   Updated: 2022/12/29 22:25:07 by fvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ int	main(int argc, char **argv, char **envp)
 			create_commands();
 			exec_input();
 		}
-		waitpid(-1, &ms()->status, 0);
+		while (wait(NULL) > 0)
+			;
 		if (!ms()->toplvl && !ms()->exit)
 			ms()->status = WEXITSTATUS(ms()->status);
 		else

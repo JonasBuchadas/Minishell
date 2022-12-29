@@ -6,7 +6,7 @@
 /*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 15:59:42 by fvarela           #+#    #+#             */
-/*   Updated: 2022/12/28 21:11:49 by fvarela          ###   ########.fr       */
+/*   Updated: 2022/12/29 22:16:33 by fvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	ft_execbin(t_list *current)
 		}
 		current = current->next;
 	}
+	close_pipes();
 }
 
 void	exec_input(void)
