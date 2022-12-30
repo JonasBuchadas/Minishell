@@ -15,7 +15,6 @@
 static void	init_minishell(char **envp);
 static void	run_ms(void);
 static void	run_input(void);
-static void	command_paths(void);
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -26,7 +25,6 @@ int	main(int argc, char **argv, char **envp)
 	run_ms();
 	clear_data(true);
 	ft_strarray_clear(&ms()->envp);
-	ft_strarray_clear(&ms()->env_paths);
 	return (EXIT_SUCCESS);
 }
 
@@ -79,20 +77,20 @@ static void	init_minishell(char **envp)
 	mini->d_out = dup(STDOUT_FILENO);
 	mini->toplvl = 1;
 	mini->status = 0;
-	command_paths();
 }
 
-static void	command_paths(void)
+char	**command_paths(void)
 {
 	int			i;
-	t_minishell	*mini;
 
 	i = -1;
-	mini = ms();
 	while (ms()->envp[++i])
 	{
 		if (!ft_strncmp(ms()->envp[i], "PATH=", 5))
 			break ;
 	}
-	mini->env_paths = ft_split(ms()->envp[i] + 5, ':');
+	if (!ms()->envp[i])
+		return (NULL);
+	else
+		return (ft_split(ms()->envp[i] + 5, ':'));
 }

@@ -96,6 +96,7 @@ void		file_error(char *error, char *filename, bool stop);
 void		check_malloc(void *ptr);
 void		create_tokens(void);
 void		expand_tokens(void);
+char		**command_paths(void);
 // void redirect_io();
 void		clear_data(bool clear_history);
 void		del_token(void *token);

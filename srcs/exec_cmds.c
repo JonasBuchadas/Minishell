@@ -37,13 +37,16 @@ void	ft_execbin(t_list *current)
 static void	child_process(t_command *command)
 {
 	t_minishell	*mini;
+	char		**env_paths;
 
 	mini = ms();
 	redirect_io(command);
 	close_pipes();
+	env_paths = command_paths();
 	if (access(command->command[0], F_OK) != ERROR)
 		execve(command->command[0], command->command, mini->envp);
-	mini->cmd = find_command(command->command[0], mini->env_paths);
+	mini->cmd = find_command(command->command[0], env_paths);
+	free(env_paths);
 	if ((!mini->cmd || access(mini->cmd, F_OK) == ERROR)
 		&& !ft_isbt(command))
 		command_errors(command->command[0], true, true);

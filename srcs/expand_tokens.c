@@ -96,7 +96,7 @@ static char	*expand_env_var(t_token *token, int i, int len)
 	if (ft_strequal(temp1, "?") || temp1[0] == '?')
 		env = ft_itoa(ms()->status);
 	else
-		env = getenv(temp1);
+		env = get_env(temp1);
 	ft_strdel(&temp1);
 	return (env);
 }
