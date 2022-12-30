@@ -59,8 +59,10 @@ static void	run_ms(void)
 static void	run_input(void)
 {
 	create_tokens();
+	ft_lstiter(ms()->tokens, print_token);
 	expand_tokens();
 	create_commands();
+	ft_lstiter(ms()->commands, print_command);
 	exec_input();
 }
 
