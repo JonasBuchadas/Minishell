@@ -46,7 +46,10 @@ static void	expand_token_text(t_token *token)
 			while (token->text[++j] && token->text[j] != ' '
 				&& token->text[j] != '$' && token->text[j] != '=')
 				len++;
-			expand_env(token, i, len);
+			if (token->text[i + 1] == '?')
+				expand_env(token, i, 1);
+			else
+				expand_env(token, i, len);
 			i--;
 			if (!token->text[0])
 				break ;
@@ -61,9 +64,6 @@ static void	expand_env(t_token *token, int i, int env_len)
 	char			*temp2;
 	char			*env;
 
-	printf("Char is %c\n", token->text[i + 1]);
-	if (token->text[i + 1] == '?')
-		env_len = 1;
 	env = expand_env_var(token, i, env_len);
 	if (!env)
 		env = (char *)protected_calloc(1, 1);
@@ -77,7 +77,7 @@ static void	expand_env(t_token *token, int i, int env_len)
 		i -= ft_strlen(env) - 1;
 		free(env);
 	}
-	temp1 = ft_substr(token->text, (unsigned int) i, 
+	temp1 = ft_substr(token->text, (unsigned int) i, \
 		(size_t)strlen(token->text) - i);
 	ft_strdel(&token->text);
 	token->text = ft_strjoin(temp2, temp1);

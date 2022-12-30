@@ -58,30 +58,3 @@ void	close_fd(void *elem)
 	if (!(command->out_fd == -1 || command->out_fd == STDOUT_FILENO))
 		close(command->out_fd);
 }
-
-void	print_token(void *elem)
-{
-	t_token	*token;
-
-	if (!elem)
-		return ;
-	token = (t_token *)elem;
-	printf("Token :%s\n", token->text);
-}
-
-void	print_command(void *elem)
-{
-	t_command	*command_elem;
-	char		**command;
-
-	if (!elem)
-		return ;
-	command_elem = (t_command *)elem;
-	command = command_elem->command;
-	while (*command)
-	{
-		printf("%s,", *command);
-		command++;
-	}
-	printf("\n");
-}

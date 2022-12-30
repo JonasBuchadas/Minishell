@@ -68,7 +68,6 @@ int	bt_cd(t_command	*cmd)
 			return (bt_cd_error(cmd->command));
 		if (old)
 			ft_putendl_fd(dir, 1);
-/* 		ft_strdel(&dir); */
 	}
 	return (EXIT_SUCCESS);
 }
