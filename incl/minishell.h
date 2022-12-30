@@ -6,7 +6,7 @@
 /*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 10:04:11 by jocaetan          #+#    #+#             */
-/*   Updated: 2022/12/28 21:11:03 by fvarela          ###   ########.fr       */
+/*   Updated: 2022/12/30 08:40:05 by fvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct s_minishell
 	bool			on_read;
 	int				toplvl;
 	int				status;
+	int				lstatus;
 }			t_minishell;
 
 t_minishell	*ms(void);

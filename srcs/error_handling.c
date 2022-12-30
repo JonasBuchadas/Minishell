@@ -6,7 +6,7 @@
 /*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 15:55:02 by fvarela           #+#    #+#             */
-/*   Updated: 2022/12/24 15:55:04 by fvarela          ###   ########.fr       */
+/*   Updated: 2022/12/29 22:38:48 by fvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	command_errors(char *errname, bool clear, bool stop)
 	ft_strdel(&prompt_line);
 	ft_strdel(&full_line);
 	ms()->status = EXIT_COMMAND;
+	ms()->exit = EXIT_COMMAND;
 	if (clear)
 		clear_data(true);
 	if (stop)

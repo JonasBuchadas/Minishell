@@ -6,7 +6,7 @@
 /*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 16:11:18 by fvarela           #+#    #+#             */
-/*   Updated: 2022/12/29 22:25:07 by fvarela          ###   ########.fr       */
+/*   Updated: 2022/12/30 08:58:48 by fvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	main(int argc, char **argv, char **envp)
 	sg_init();
 	while (1)
 	{
+		add_history("echo \"lol\" | grep \"lol\" | askdjhaskd | asdjkhaskd");
 		ms()->on_read = 1;
 		ms()->input = readline(PROMPT);
 		ms()->on_read = 0;
@@ -43,11 +44,9 @@ int	main(int argc, char **argv, char **envp)
 		}
 		while (wait(NULL) > 0)
 			;
-		if (!ms()->toplvl && !ms()->exit)
-			ms()->status = WEXITSTATUS(ms()->status);
-		else
-			ms()->status = ms()->exit;
 		ms()->exit = 0;
+		ms()->lstatus = ms()->status;
+		ms()->status = 0;
 		ms()->toplvl = 1;
 		clear_data(false);
 	}
@@ -68,6 +67,7 @@ static void	init_minishell(char **envp)
 	mini->d_in = dup(STDIN_FILENO);
 	mini->d_out = dup(STDOUT_FILENO);
 	mini->toplvl = 1;
+	mini->status = 0;
 	command_paths();
 }
 
