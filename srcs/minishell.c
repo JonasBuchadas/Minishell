@@ -23,7 +23,7 @@ int	main(int argc, char **argv, char **envp)
 	sg_init();
 	while (1)
 	{
-		add_history("echo \"lol\" | grep \"lol\" | askdjhaskd | asdjkhaskd");
+		// add_history("echo \"lol\" | grep \"lol\" | askdjhaskd | asdjkhaskd");
 		ms()->on_read = 1;
 		ms()->input = readline(PROMPT);
 		ms()->on_read = 0;
@@ -46,7 +46,7 @@ int	main(int argc, char **argv, char **envp)
 			;
 		ms()->exit = 0;
 		ms()->lstatus = ms()->status;
-		ms()->status = 0;
+		// ms()->status = 0;
 		ms()->toplvl = 1;
 		clear_data(false);
 	}

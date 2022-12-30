@@ -74,7 +74,7 @@ static void	expand_env(t_token *token, int i, int env_len)
 	i += env_len;
 	if (token->text[start + 1] == '?')
 	{
-		i -= ft_strlen(env) - 2;
+		i -= ft_strlen(env) - 3;
 		free(env);
 	}
 	temp1 = ft_substr(token->text, (unsigned int) i, (size_t)env_len - i);
