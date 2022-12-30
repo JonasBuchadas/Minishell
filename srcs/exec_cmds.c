@@ -45,10 +45,10 @@ void	ft_execbin(t_list *current)
 		{
 			if (command->cmd_nu > 0 )
 			{
-				close(ms()->pipes[(command->cmd_nu - 1) * 2]);
-				close(ms()->pipes[((command->cmd_nu - 1) * 2) + 1]);
+				close(ms()->pipes[(command->cmd_nu - 1) * 2] + READ_END);
+				close(ms()->pipes[((command->cmd_nu - 1) * 2) + WRITE_END]);
 			}
-			waitpid(-1, &ms()->status, 0);
+			waitpid(-1, &ms()->status, WNOHANG);
 			ms()->status = WEXITSTATUS(ms()->status);
 			if (ms()->status > 0)
 				ms()->exit = ms()->status;
