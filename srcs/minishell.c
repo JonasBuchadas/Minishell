@@ -6,7 +6,7 @@
 /*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 16:11:18 by fvarela           #+#    #+#             */
-/*   Updated: 2022/12/30 08:58:48 by fvarela          ###   ########.fr       */
+/*   Updated: 2022/12/30 15:48:30 by fvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,12 @@ int	main(int argc, char **argv, char **envp)
 			create_commands();
 			exec_input();
 		}
-		while (wait(NULL) > 0)
+		/* dprintf(2, "WAITING\n"); */
+		while (wait(&ms()->status) > 0)
 			;
+		/* dprintf(2, "NOT WAITING\n"); */
+		if (WIFEXITED(ms()->status))
+			ms()->status = WEXITSTATUS(ms()->status);
 		ms()->exit = 0;
 		ms()->lstatus = ms()->status;
 		// ms()->status = 0;

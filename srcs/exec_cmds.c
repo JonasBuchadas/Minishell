@@ -6,7 +6,7 @@
 /*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 15:59:42 by fvarela           #+#    #+#             */
-/*   Updated: 2022/12/30 08:57:27 by fvarela          ###   ########.fr       */
+/*   Updated: 2022/12/30 15:48:23 by fvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,34 +27,20 @@ void	ft_execbin(t_list *current)
 		ms()->pid_cmd = fork();
 		if (ms()->pid_cmd == ERROR)
 			program_errors("FORK", true, true);
-		if (ms()->pid_cmd == CHILD_PROCESS && ms()->exit == 0)
+		if (ms()->pid_cmd == CHILD_PROCESS)
 		{
 			redirect_io(command);
 			close_pipes();
-			if (access(command->command[0], F_OK) != ERROR && ms()->exit == 0)
+			if (access(command->command[0], F_OK) != ERROR)
 				execve(command->command[0], command->command, ms()->envp);
 			ms()->cmd = find_command(command->command[0], ms()->env_paths);
 			if ((!ms()->cmd || access(ms()->cmd, F_OK) == ERROR) && !ft_isbt(command))
 				command_errors(command->command[0], true, true);
-			if (ft_isbt(command) && ms()->exit == 0)
+			if (ft_isbt(command))
 				ft_execbt(command);
-			else if (ms()->exit == 0)
+			else
 				execve(ms()->cmd, command->command, ms()->envp);
 		}
-		else if (ms()->exit == 0)
-		{
-			if (command->cmd_nu > 0 )
-			{
-				close(ms()->pipes[(command->cmd_nu - 1) * 2] + READ_END);
-				close(ms()->pipes[((command->cmd_nu - 1) * 2) + WRITE_END]);
-			}
-			waitpid(-1, &ms()->status, WNOHANG);
-			ms()->status = WEXITSTATUS(ms()->status);
-			if (ms()->status > 0)
-				ms()->exit = ms()->status;
-		}
-		if (ms()->pid_cmd == CHILD_PROCESS)
-			exit(ms()->exit);
 		current = current->next;
 	}
 	close_pipes();
