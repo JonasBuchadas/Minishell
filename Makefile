@@ -24,7 +24,8 @@ SRCS=		structs.c \
 			expand_tokens.c \
 			create_commands.c \
 			error_handling.c \
-			aux.c \
+			iterables.c \
+			utils.c \
 			exec_cmds.c \
 			input.c \
 			envp.c \

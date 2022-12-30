@@ -51,3 +51,19 @@ int	ft_strcmp(const char *s1, const char *s2)
 	}
 	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
+
+void	close_pipes(void)
+{
+	int	i;
+
+	if (!ms()->pipes)
+		return ;
+	i = -1;
+	while (++i < ms()->n_pipes)
+	{
+		close(ms()->pipes[i]);
+		ms()->pipes[i] = -1;
+	}
+	free(ms()->pipes);
+	ms()->pipes = NULL;
+}

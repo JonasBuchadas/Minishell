@@ -12,33 +12,30 @@
 
 #include "minishell.h"
 
+static void		expand_token_text(t_token *token);
 static void		expand_env(t_token *token, int i, int len);
 static char		*expand_env_var(t_token *token, int i, int env_len);
 static t_token	*create_token(char *text, int code);
 
-void	expand_tokens(void)
-{
-	t_list	*tokens;
-
-	tokens = ft_lstmap(ms()->tokens, &expand_token, &del_token);
-	if (!tokens)
-		program_errors("MALLOC", true, true);
-	ft_lstclear(&ms()->tokens, del_token_list);
-	ms()->tokens = tokens;
-}
-
 void	*expand_token(void *elem)
 {
 	t_token	*token;
-	int		i;
-	int		j;
-	int		len;
 
 	if (!elem)
 		program_errors("MALLOC", true, true);
 	token = (t_token *)elem;
 	if (token->parse_code == SINGLE_QUOTES)
 		return ((void *)create_token(token->text, token->parse_code));
+	expand_token_text(token);
+	return ((void *)create_token(token->text, token->parse_code));
+}
+
+static void	expand_token_text(t_token *token)
+{
+	int		i;
+	int		j;
+	int		len;
+
 	i = -1;
 	while (token->text[++i])
 	{
@@ -46,7 +43,8 @@ void	*expand_token(void *elem)
 		{
 			len = 0;
 			j = i;
-			while (token->text[++j] && token->text[j] != ' ' && token->text[j] != '$' && token->text[j] != '=')
+			while (token->text[++j] && token->text[j] != ' '
+				&& token->text[j] != '$' && token->text[j] != '=')
 				len++;
 			expand_env(token, i, len);
 			i--;
@@ -54,7 +52,6 @@ void	*expand_token(void *elem)
 				break ;
 		}
 	}
-	return ((void *)create_token(token->text, token->parse_code));
 }
 
 static void	expand_env(t_token *token, int i, int env_len)

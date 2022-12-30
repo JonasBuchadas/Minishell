@@ -56,6 +56,7 @@ int	main(int argc, char **argv, char **envp)
 	}
 	clear_data(true);
 	ft_strarray_clear(&ms()->envp);
+	ft_strarray_clear(&ms()->env_paths);
 	return (EXIT_SUCCESS);
 }
 
