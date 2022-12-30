@@ -128,6 +128,7 @@ int			bt_unset(t_command *cmd);
 void		bt_exit(void);
 /* AUX */
 int			ft_strcmp(const char *s1, const char *s2);
+void		create_pipes(void);
 /* ENV */
 char		**init_env(char **env, int ra);
 char		*get_env(char	*str);

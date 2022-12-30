@@ -13,6 +13,8 @@
 #include "minishell.h"
 
 static void	init_minishell(char **envp);
+static void	run_ms(void);
+static void	run_input(void);
 static void	command_paths(void);
 
 int	main(int argc, char **argv, char **envp)
@@ -21,9 +23,17 @@ int	main(int argc, char **argv, char **envp)
 	(void) argv;
 	init_minishell(envp);
 	sg_init();
+	run_ms();
+	clear_data(true);
+	ft_strarray_clear(&ms()->envp);
+	ft_strarray_clear(&ms()->env_paths);
+	return (EXIT_SUCCESS);
+}
+
+static void	run_ms(void)
+{
 	while (1)
 	{
-		// add_history("echo \"lol\" | grep \"lol\" | askdjhaskd | asdjkhaskd");
 		ms()->on_read = 1;
 		ms()->input = readline(PROMPT);
 		ms()->on_read = 0;
@@ -36,28 +46,24 @@ int	main(int argc, char **argv, char **envp)
 		if (ft_strequal(ms()->input, "clear"))
 			rl_clear_history();
 		else
-		{
-			create_tokens();
-			expand_tokens();
-			create_commands();
-			exec_input();
-		}
-		/* dprintf(2, "WAITING\n"); */
+			run_input();
 		while (wait(&ms()->status) > 0)
 			;
-		/* dprintf(2, "NOT WAITING\n"); */
 		if (WIFEXITED(ms()->status))
 			ms()->status = WEXITSTATUS(ms()->status);
 		ms()->exit = 0;
 		ms()->lstatus = ms()->status;
-		// ms()->status = 0;
 		ms()->toplvl = 1;
 		clear_data(false);
 	}
-	clear_data(true);
-	ft_strarray_clear(&ms()->envp);
-	ft_strarray_clear(&ms()->env_paths);
-	return (EXIT_SUCCESS);
+}
+
+static void	run_input(void)
+{
+	create_tokens();
+	expand_tokens();
+	create_commands();
+	exec_input();
 }
 
 static void	init_minishell(char **envp)

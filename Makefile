@@ -26,6 +26,7 @@ SRCS=		structs.c \
 			error_handling.c \
 			iterables.c \
 			utils.c \
+			pipes.c \
 			exec_cmds.c \
 			input.c \
 			envp.c \

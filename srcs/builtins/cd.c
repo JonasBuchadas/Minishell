@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+static char	*bt_get_dir(t_command *cmd, bool *old);
+
 int	bt_cd_error(char **cmd)
 {
 	char	*error;
@@ -48,15 +50,12 @@ int	bt_cd(t_command	*cmd)
 {
 	char	*dir;
 	int		cd;
+	bool	old;
 
 	dir = NULL;
+	old = false;
 	cd = 0;
-	if (cmd->command[1] && !ft_strequal(cmd->command[1], "-"))
-		dir = cmd->command[1];
-	else if (cmd->command[1] && ft_strequal(cmd->command[1], "-"))
-		dir = get_env("OLDPWD=");
-	else
-		dir = get_env("HOME=");
+	dir = bt_get_dir(cmd, &old);
 	if (!dir)
 		return (bt_cd_error(cmd->command));
 	else
@@ -67,6 +66,25 @@ int	bt_cd(t_command	*cmd)
 			bt_setpwd(0);
 		else
 			return (bt_cd_error(cmd->command));
+		if (old)
+			ft_putendl_fd(dir, 1);
+		ft_strdel(&dir);
 	}
 	return (EXIT_SUCCESS);
+}
+
+static char	*bt_get_dir(t_command *cmd, bool *old)
+{
+	char	*dir;
+
+	if (cmd->command[1] && !ft_strequal(cmd->command[1], "-"))
+		dir = cmd->command[1];
+	else if (cmd->command[1] && ft_strequal(cmd->command[1], "-"))
+	{
+		dir = ft_strdup(get_env("OLDPWD"));
+		*old = true;
+	}
+	else
+		dir = ft_strdup(get_env("HOME"));
+	return (dir);
 }

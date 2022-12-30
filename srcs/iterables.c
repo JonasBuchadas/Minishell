@@ -27,33 +27,6 @@ void	del_token_list(void *elem)
 	ft_memdel(&elem);
 }
 
-void	print_token(void *elem)
-{
-	t_token	*token;
-
-	if (!elem)
-		return ;
-	token = (t_token *)elem;
-	printf("Token :%s\n", token->text);
-}
-
-void	print_command(void *elem)
-{
-	t_command	*command_elem;
-	char		**command;
-
-	if (!elem)
-		return ;
-	command_elem = (t_command *)elem;
-	command = command_elem->command;
-	while (*command)
-	{
-		printf("%s,", *command);
-		command++;
-	}
-	printf("\n");
-}
-
 void	del_command(void *elem)
 {
 	t_command	*command;
