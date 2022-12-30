@@ -46,7 +46,7 @@ static void	child_process(t_command *command)
 	if (access(command->command[0], F_OK) != ERROR)
 		execve(command->command[0], command->command, mini->envp);
 	mini->cmd = find_command(command->command[0], env_paths);
-	free(env_paths);
+	ft_strarray_clear(&env_paths);
 	if ((!mini->cmd || access(mini->cmd, F_OK) == ERROR)
 		&& !ft_isbt(command))
 		command_errors(command->command[0], true, true);
