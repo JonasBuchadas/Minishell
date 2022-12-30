@@ -6,7 +6,7 @@
 /*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 07:52:37 by fvarela           #+#    #+#             */
-/*   Updated: 2022/12/28 21:12:24 by fvarela          ###   ########.fr       */
+/*   Updated: 2022/12/30 09:07:18 by fvarela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	sg_int(int sghandler)
 	(void)sghandler;
 	ms()->status = EXIT_SIGINT;
 	ms()->exit = EXIT_SIGINT;
+	if (ms()->on_read)
+		ms()->lstatus = EXIT_SIGINT;
 	write(2, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
