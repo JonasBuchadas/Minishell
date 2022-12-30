@@ -124,7 +124,7 @@ int			bt_pwd(void);
 void		bt_env(void);
 void		bt_export(t_command *cmd);
 int			bt_unset(t_command *cmd);
-void		bt_exit(void);
+int			bt_exit(t_command *cmd);
 /* AUX */
 int			ft_strcmp(const char *s1, const char *s2);
 void		create_pipes(void);

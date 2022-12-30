@@ -46,7 +46,7 @@ void	ft_execbt(t_command *cmd)
 	if (ft_strequal(cmd->command[0], "env"))
 		bt_env();
 	if (ft_strequal(cmd->command[0], "exit"))
-		bt_exit();
+		bt_exit(cmd);
 	if (cmd->pipe || ft_lstsize(ms()->commands) > 1)
 		exit(ms()->exit);
 }

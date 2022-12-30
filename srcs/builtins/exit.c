@@ -12,8 +12,35 @@
 
 #include "minishell.h"
 
-void	bt_exit(void)
+int	bt_exit_error(char *str, int ex)
 {
-	ms()->exit = 1;
-	exit(1);
+	ft_putendl_fd(str, 2);
+	if (ex >= 0)
+		exit(ex);
+	else
+		return ((ex * -1));
+}
+
+int	bt_exit(t_command *cmd)
+{
+	int	ec;
+	int	c;
+
+	c = 0;
+	if (cmd->command[1] && cmd->command[2])
+		return (bt_exit_error("exit: too many arguments", -1));
+	if (cmd->command[1])
+	{
+		c = -1;
+		while (cmd->command[1][++c])
+			if (!ft_isdigit(cmd->command[1][c]))
+				bt_exit_error("exit: numeric argument required", 2);
+		ec = ft_atoi(cmd->command[1]);
+		exit (ec);
+	}
+	else
+	{
+		ft_putendl_fd("exit", 0);
+		exit(0);
+	}
 }

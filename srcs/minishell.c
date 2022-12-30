@@ -39,8 +39,6 @@ static void	run_ms(void)
 		ms()->on_read = 0;
 		if (!(ms()->input))
 			exit(1);
-		if (ft_strequal(ms()->input, "exit"))
-			break ;
 		if (ms()->input && *ms()->input)
 			add_history(ms()->input);
 		if (ft_strequal(ms()->input, "clear"))
