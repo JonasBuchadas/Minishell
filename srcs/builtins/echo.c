@@ -6,7 +6,7 @@
 /*   By: jocaetan <jocaetan@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 23:22:26 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/02 00:36:45 by jocaetan         ###   ########.fr       */
+/*   Updated: 2023/01/11 23:28:41 by jocaetan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ int	bt_echo(t_command *cmd)
 	is_n_flag(cmd, &n_flag);
 	if (!n_flag)
 	{
-		echo = ft_strnstr(cmd->raw_command, "echo ", 6);
+		echo = ft_strnstr(cmd->raw_command, "echo", 5);
 		echo = echo + 5;
 		ft_putendl_fd(echo, 1);
 	}
 	else
 	{
-		echo = ft_strnstr(cmd->raw_command, "-n ", 10);
+		echo = ft_strnstr(cmd->raw_command, "-n", 9);
 		echo = echo + 3;
 		ft_putstr_fd(echo, 1);
 	}
