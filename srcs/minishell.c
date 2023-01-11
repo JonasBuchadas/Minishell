@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jocaetan <jocaetan@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 16:11:18 by jocaetan          #+#    #+#             */
-/*   Updated: 2023/01/02 00:20:20 by jocaetan         ###   ########.fr       */
+/*   Updated: 2023/01/11 22:51:33 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	run_ms(void)
 			exit(1);
 		if (ms()->input && *ms()->input)
 			add_history(ms()->input);
-		if (ft_strequal(ms()->input, "clear"))
+		if (ft_strequal(ms()->input, "history -c"))
 			rl_clear_history();
 		else
 			run_input();
