@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
+/*   By: jocaetan <jocaetan@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/24 15:55:02 by fvarela           #+#    #+#             */
-/*   Updated: 2022/12/29 22:38:48 by fvarela          ###   ########.fr       */
+/*   Created: 2022/12/24 15:55:02 by jocaetan          #+#    #+#             */
+/*   Updated: 2023/01/02 00:17:24 by jocaetan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	command_errors(char *errname, bool clear, bool stop)
 	char	*prompt_line;
 	char	*full_line;
 
-	prompt_line = ft_strjoin(PROMPT, "command not found: ");
-	full_line = ft_strjoin(prompt_line, errname);
+	prompt_line = ft_strjoin(errname, ": ");
+	full_line = ft_strjoin(prompt_line, "command not found");
 	ft_putendl_fd(full_line, 2);
 	ft_strdel(&prompt_line);
 	ft_strdel(&full_line);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
+/*   By: jocaetan <jocaetan@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/24 16:11:18 by fvarela           #+#    #+#             */
-/*   Updated: 2022/12/30 15:48:30 by fvarela          ###   ########.fr       */
+/*   Created: 2022/12/24 16:11:18 by jocaetan          #+#    #+#             */
+/*   Updated: 2023/01/02 00:20:20 by jocaetan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

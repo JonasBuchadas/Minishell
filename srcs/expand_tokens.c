@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
+/*   By: jocaetan <jocaetan@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 16:07:04 by fvarela           #+#    #+#             */
-/*   Updated: 2022/12/24 16:07:05 by fvarela          ###   ########.fr       */
+/*   Updated: 2023/01/02 00:17:37 by jocaetan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	*expand_token(void *elem)
 	if (token->parse_code == SINGLE_QUOTES)
 		return ((void *)create_token(token->text, token->parse_code));
 	expand_token_text(token);
+	if (token->parse_code == NORMAL)
+		expand_tilde(token);
 	return ((void *)create_token(token->text, token->parse_code));
 }
 
@@ -74,7 +76,7 @@ static void	expand_env(t_token *token, int i, int env_len)
 	i += env_len;
 	if (token->text[start + 1] == '?')
 	{
-		i -= ft_strlen(env) - 1;
+		i -= ft_strlen(env) - 3;
 		free(env);
 	}
 	temp1 = ft_substr(token->text, (unsigned int) i, \

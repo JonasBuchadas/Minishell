@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_commands.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
+/*   By: jocaetan <jocaetan@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 15:32:34 by fvarela           #+#    #+#             */
-/*   Updated: 2022/12/28 21:11:24 by fvarela          ###   ########.fr       */
+/*   Updated: 2023/01/02 00:17:16 by jocaetan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ static char	*add_command(char *cmd, bool create_pipe)
 	t_command	*command;
 
 	command = protected_calloc(1, sizeof(t_command));
+	command->raw_command = cmd;
 	command->command = ft_split(cmd, ' ');
 	command->in_fd = ms()->file_input;
 	command->out_fd = ms()->file_output;
@@ -96,6 +97,5 @@ static char	*add_command(char *cmd, bool create_pipe)
 	}
 	ms()->file_input = STDIN_FILENO;
 	ms()->file_output = STDOUT_FILENO;
-	ft_strdel(&cmd);
 	return ((char *)protected_calloc(1, 1));
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   iterables.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
+/*   By: jocaetan <jocaetan@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/14 08:45:07 by fvarela           #+#    #+#             */
-/*   Updated: 2022/12/24 16:12:37 by fvarela          ###   ########.fr       */
+/*   Created: 2022/12/14 08:45:07 by jocaetan          #+#    #+#             */
+/*   Updated: 2023/01/02 00:20:28 by jocaetan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	del_command(void *elem)
 	t_command	*command;
 
 	command = (t_command *)elem;
+	ft_strdel(&command->raw_command);
 	ft_strarray_clear(&command->command);
 	ft_memdel(&elem);
 }

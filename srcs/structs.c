@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structs.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
+/*   By: jocaetan <jocaetan@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/24 16:11:57 by fvarela           #+#    #+#             */
-/*   Updated: 2022/12/24 16:11:58 by fvarela          ###   ########.fr       */
+/*   Created: 2022/12/24 16:11:57 by jocaetan          #+#    #+#             */
+/*   Updated: 2023/01/02 00:19:40 by jocaetan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

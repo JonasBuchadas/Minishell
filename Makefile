@@ -22,6 +22,7 @@ SRC_BONUS=	$(NAME)_bonus.c
 SRCS=		structs.c \
 			create_tokens.c \
 			expand_tokens.c \
+			expand_tilde.c \
 			create_commands.c \
 			error_handling.c \
 			iterables.c \

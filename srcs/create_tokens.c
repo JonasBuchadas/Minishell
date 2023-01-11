@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
+/*   By: jocaetan <jocaetan@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 15:35:16 by fvarela           #+#    #+#             */
-/*   Updated: 2022/12/24 15:35:17 by fvarela          ###   ########.fr       */
+/*   Updated: 2023/01/02 00:17:19 by jocaetan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

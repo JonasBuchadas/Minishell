@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fvarela <fvarela@student.42lisboa.com>     +#+  +:+       +#+        */
+/*   By: jocaetan <jocaetan@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 10:04:11 by jocaetan          #+#    #+#             */
-/*   Updated: 2022/12/30 08:40:05 by fvarela          ###   ########.fr       */
+/*   Updated: 2023/01/02 00:37:02 by jocaetan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # define PIPE 2
 # define HERE_DOC 3
 
-# define PROMPT "minishell: "
+# define PROMPT "\e[0;35mminishell: \033[0m"
 # define EXIT_COMMAND 127
 # define EXIT_SIGINT 130
 # define EXIT_SIGQUIT 131
@@ -54,6 +54,7 @@ typedef struct s_token
 typedef struct s_command
 {
 	int		cmd_nu;
+	char	*raw_command;
 	char	**command;
 	int		in_fd;
 	int		out_fd;
@@ -134,6 +135,7 @@ char		**init_env(char **env, int ra);
 char		*get_env(char	*str);
 char		*get_env_name(char	*str);
 void		set_env(char *env, char *value);
+void		expand_tilde(t_token *token);
 /* SIGNALS */
 void		sg_init(void);
 #endif
