@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 15:59:42 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/12 15:00:34 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/12 19:05:43 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	exec_input(void)
 
 	current = ms()->commands;
 	command = (t_command *)current->content;
-	if (is_dir(command))
+	if (is_dir(command) || is_local_fd(command))
 		return ;
 	else if (ft_isbt(command) && !command->pipe)
 	{

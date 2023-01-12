@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 10:04:11 by jocaetan          #+#    #+#             */
-/*   Updated: 2023/01/12 15:19:32 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/12 19:12:49 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,9 @@ int			bt_exit(t_command *cmd);
 /* AUX */
 int			ft_strcmp(const char *s1, const char *s2);
 void		create_pipes(void);
+void		ft_execbin(t_list *current);
 int			is_dir(t_command *cmd);
+int			is_local_fd(t_command *cmd);
 char		*ft_relative_path(char *cwd);
 /* ENV */
 char		**init_env(char **env, int ra);

@@ -6,11 +6,27 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 22:59:36 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/12 10:45:26 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/12 19:15:05 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_local_fd(t_command *cmd)
+{
+	if (cmd->command[0][0] == '.' && cmd->command[0][1] == '/')
+	{
+		 if (!access(cmd->command[0], F_OK))
+		{
+			if (!access(cmd->command[0], X_OK))
+				open(cmd->command[0], O_RDONLY);
+			else
+				perror("Error");
+			return (1);
+		}
+	}
+	return (0);
+}
 
 int	is_dir(t_command *cmd)
 {
@@ -23,8 +39,9 @@ int	is_dir(t_command *cmd)
 		ft_putstr_fd("minishell: ", 2);
 		ft_putstr_fd(cmd->command[0], 2);
 		ft_putendl_fd(": is a directory", 2);
+		return (1);
 	}
-	return (1);
+	return (0);
 }
 
 int	ft_isbt(t_command	*cmd)
