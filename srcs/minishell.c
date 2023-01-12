@@ -30,17 +30,12 @@ int	main(int argc, char **argv, char **envp)
 
 static void	run_ms(void)
 {
-	char *cwd;
-	char *path;
-
-	cwd = getcwd(NULL, 0);
-	path = ft_relative_path(cwd);
 	while (1)
 	{
-		cwd = getcwd(NULL, 0);
-		path = ft_relative_path(cwd);
+		ms()->cwd = getcwd(NULL, 0);
+		ms()->path = ft_relative_path(ms()->cwd);
 		ms()->on_read = 1;
-		printf("%s➜%s %s%s%s ", BLUE, RESET, GREEN, path, RESET);
+		printf("%s➜%s %s%s%s ", BLUE, RESET, GREEN, ms()->path, RESET);
 		ms()->input = readline(YELLOW "~" RESET " ");
 		ms()->on_read = 0;
 		if (!(ms()->input))
@@ -59,8 +54,6 @@ static void	run_ms(void)
 		ms()->lstatus = ms()->status;
 		ms()->toplvl = 1;
 		clear_data(false);
-		free(cwd);
-		free(path);
 	}
 }
 

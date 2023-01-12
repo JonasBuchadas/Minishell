@@ -85,6 +85,8 @@ typedef struct s_minishell
 	char			*cmd;
 	char			**envp;
 	char			**env_paths;
+	char			*cwd;
+	char			*path;
 	char			*input;
 	t_list			*tokens;
 	t_list			*commands;

@@ -75,6 +75,8 @@ void	clear_data(bool clear_history)
 	if (clear_history)
 		rl_clear_history();
 	ft_strdel(&ms()->input);
+	ft_strdel(&ms()->cwd);
+	ft_strdel(&ms()->path);
 	ft_strdel(&ms()->limiter);
 	ft_strdel(&ms()->err_message);
 	ft_strdel(&ms()->cmd);
