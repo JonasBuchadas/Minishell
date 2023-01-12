@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 15:59:42 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/12 10:58:37 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:00:34 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	exec_input(void)
 	command = (t_command *)current->content;
 	if (is_dir(command))
 		return ;
-	if (ft_isbt(command) && !command->pipe)
+	else if (ft_isbt(command) && !command->pipe)
 	{
 		redirect_io(command);
 		close_pipes();

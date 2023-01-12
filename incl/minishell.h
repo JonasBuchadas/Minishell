@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 10:04:11 by jocaetan          #+#    #+#             */
-/*   Updated: 2023/01/12 10:43:44 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:19:32 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,12 @@
 # define EXIT_SIGQUIT 131
 
 # define CTRL_C 3
+# define RED "\x1B[31m"
+# define GREEN "\x1B[32m"
+# define YELLOW "\x1B[33m"
+# define BLUE "\x1B[34m"
+# define PURPLE "\x1B[35m"
+# define RESET "\x1b[0m"
 
 typedef struct s_token
 {
@@ -135,6 +141,7 @@ int			bt_exit(t_command *cmd);
 int			ft_strcmp(const char *s1, const char *s2);
 void		create_pipes(void);
 int			is_dir(t_command *cmd);
+char		*ft_relative_path(char *cwd);
 /* ENV */
 char		**init_env(char **env, int ra);
 char		*get_env(char	*str);

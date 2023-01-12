@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 16:11:18 by jocaetan          #+#    #+#             */
-/*   Updated: 2023/01/12 10:57:57 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:20:32 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,18 @@ int	main(int argc, char **argv, char **envp)
 
 static void	run_ms(void)
 {
+	char *cwd;
+	char *path;
+
+	cwd = getcwd(NULL, 0);
+	path = ft_relative_path(cwd);
 	while (1)
 	{
+		cwd = getcwd(NULL, 0);
+		path = ft_relative_path(cwd);
 		ms()->on_read = 1;
-		ms()->input = readline(PROMPT);
+		printf("%s➜%s %s%s%s ", BLUE, RESET, GREEN, path, RESET);
+		ms()->input = readline(YELLOW "~" RESET " ");
 		ms()->on_read = 0;
 		if (!(ms()->input))
 			exit(1);
@@ -51,6 +59,8 @@ static void	run_ms(void)
 		ms()->lstatus = ms()->status;
 		ms()->toplvl = 1;
 		clear_data(false);
+		free(cwd);
+		free(path);
 	}
 }
 

@@ -32,6 +32,7 @@ SRCS=		structs.c \
 			input.c \
 			envp.c \
 			signal.c \
+			prompt.c \
 			builtins/builtin.c \
 			builtins/echo.c \
 			builtins/cd.c \
