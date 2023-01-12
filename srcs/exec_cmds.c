@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmds.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jocaetan <jocaetan@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 15:59:42 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/02 00:17:32 by jocaetan         ###   ########.fr       */
+/*   Updated: 2023/01/12 10:58:37 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void	exec_input(void)
 
 	current = ms()->commands;
 	command = (t_command *)current->content;
+	if (is_dir(command))
+		return ;
 	if (ft_isbt(command) && !command->pipe)
 	{
 		redirect_io(command);

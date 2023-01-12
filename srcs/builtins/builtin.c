@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jocaetan <jocaetan@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 22:59:36 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/02 00:16:48 by jocaetan         ###   ########.fr       */
+/*   Updated: 2023/01/12 10:45:26 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_dir(t_command *cmd)
+{
+	struct stat sb;
+
+	if (stat(cmd->command[0], &sb) == -1)
+		return (0);
+	else if (S_ISDIR(sb.st_mode))
+	{
+		ft_putstr_fd("minishell: ", 2);
+		ft_putstr_fd(cmd->command[0], 2);
+		ft_putendl_fd(": is a directory", 2);
+	}
+	return (1);
+}
 
 int	ft_isbt(t_command	*cmd)
 {

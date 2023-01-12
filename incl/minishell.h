@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 10:04:11 by jocaetan          #+#    #+#             */
-/*   Updated: 2023/01/12 09:52:20 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/12 10:43:44 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <limits.h>
 # include <signal.h>
 # include <termios.h>
+# include <sys/stat.h>
 
 // Parse Codes
 # define NORMAL 0
@@ -133,6 +134,7 @@ int			bt_exit(t_command *cmd);
 /* AUX */
 int			ft_strcmp(const char *s1, const char *s2);
 void		create_pipes(void);
+int			is_dir(t_command *cmd);
 /* ENV */
 char		**init_env(char **env, int ra);
 char		*get_env(char	*str);
