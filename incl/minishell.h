@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 10:04:11 by jocaetan          #+#    #+#             */
-/*   Updated: 2023/01/12 09:09:48 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/12 09:52:20 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <stddef.h>
 # include <limits.h>
 # include <signal.h>
+# include <termios.h>
 
 // Parse Codes
 # define NORMAL 0
@@ -44,6 +45,8 @@
 # define EXIT_COMMAND 127
 # define EXIT_SIGINT 130
 # define EXIT_SIGQUIT 131
+
+# define CTRL_C 3
 
 typedef struct s_token
 {

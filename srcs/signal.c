@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jocaetan <jocaetan@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 07:52:37 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/02 00:17:47 by jocaetan         ###   ########.fr       */
+/*   Updated: 2023/01/12 09:52:00 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,13 @@ void	sg_quit(int sghandler)
 
 void	sg_init(void)
 {
+	int			 	rc;
+	struct termios	mytermios;
+
+	rc = tcgetattr(0, &mytermios);
+	mytermios.c_cc[VINTR] = CTRL_C;
+	mytermios.c_lflag &= ~ECHOCTL;
+	rc = tcsetattr(0, TCSANOW, &mytermios);
 	signal(SIGINT, &sg_int);
 	signal(SIGQUIT, &sg_quit);
 }
