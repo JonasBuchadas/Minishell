@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jocaetan <jocaetan@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 23:49:19 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/02 00:16:44 by jocaetan         ###   ########.fr       */
+/*   Updated: 2023/01/12 09:12:29 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	bt_setpwd(int old)
 	char	cwd[PATH_MAX];
 
 	getcwd(cwd, PATH_MAX);
-	if (cwd == NULL)
+	if (cwd[0] == '\0')
 		return (0);
 	if (old)
 		set_env("OLDPWD=", cwd);

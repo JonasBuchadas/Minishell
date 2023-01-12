@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jocaetan <jocaetan@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 10:04:11 by jocaetan          #+#    #+#             */
-/*   Updated: 2023/01/02 00:37:02 by jocaetan         ###   ########.fr       */
+/*   Updated: 2023/01/12 09:09:48 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 
 # include "libft.h"
 # include <sys/wait.h>
+# include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <errno.h>
 # include <unistd.h>
 # include <fcntl.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <stddef.h>
 # include <limits.h>

@@ -6,7 +6,7 @@ NAME=		minishell
 
 ### COMPILATION ###
 CC=			gcc
-CFLAGS=		-Wall -Werror -Wextra -g -fsanitize=address
+CFLAGS=		-g -fsanitize=address
 
 ### PATHS ###
 LIBFT_PATH=	./libft/
@@ -60,7 +60,7 @@ LINKS=      -L$(LIBFT_PATH) -lft -L$(READLINE_DIR) -lreadline
 ifeq ($(OS), Linux)
 	READLINE_DIR	=	/usr/include/readline
 else
-	READLINE_DIR	=	~/.brew/opt/readline/lib
+	READLINE_DIR	=	/opt/homebrew/Cellar/readline/8.1.2/lib/ -I /opt/homebrew/Cellar/readline/8.1.2/include
 endif
 INC=		-I $(LIBFT_PATH)$(INCL_PATH) -I $(INCL_PATH) -I $(READLINE_DIR)
 
