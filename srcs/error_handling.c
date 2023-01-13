@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 15:55:02 by jocaetan          #+#    #+#             */
-/*   Updated: 2023/01/13 11:53:48 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/13 14:26:36 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,14 @@ void	command_errors(char *errname, bool clear, bool stop)
 	char	*prompt_line;
 	char	*full_line;
 
-	prompt_line = ft_strjoin("minishell: ", errname);
-	prompt_line = ft_strjoin(prompt_line, ": ");
+	errname = ft_strjoin("minishell: ", errname);
+	prompt_line = ft_strjoin(errname, ": ");
 	full_line = ft_strjoin(prompt_line, "command not found");
 	ft_putendl_fd(full_line, 2);
 	ft_strdel(&prompt_line);
 	ft_strdel(&full_line);
+	free(prompt_line);
+	free(full_line);
 	ms()->status = EXIT_COMMAND;
 	ms()->exit = EXIT_COMMAND;
 	if (clear)
