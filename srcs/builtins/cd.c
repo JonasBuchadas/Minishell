@@ -69,6 +69,7 @@ int	bt_cd(t_command	*cmd)
 		if (old)
 			ft_putendl_fd(dir, 1);
 	}
+	ft_strdel(&dir);
 	return (EXIT_SUCCESS);
 }
 
@@ -77,10 +78,14 @@ static char	*bt_get_dir(t_command *cmd, bool *old)
 	char	*dir;
 
 	if (cmd->command[1] && !ft_strequal(cmd->command[1], "-"))
-		dir = cmd->command[1];
+		dir = ft_strdup(cmd->command[1]);
 	else if (cmd->command[1] && ft_strequal(cmd->command[1], "-"))
 	{
-		dir = ft_strdup(get_env("OLDPWD"));
+		dir = get_env("OLDPWD");
+		if (dir && *dir)
+			dir = ft_strdup(get_env("OLDPWD"));
+		else
+			dir = ft_strdup(get_env("HOME"));
 		*old = true;
 	}
 	else
