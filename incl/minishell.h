@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 10:04:11 by jocaetan          #+#    #+#             */
-/*   Updated: 2023/01/13 10:54:28 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/13 14:40:33 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ int			is_dir(t_command *cmd);
 int			is_local_fd(t_command *cmd);
 char		*ft_relative_path(char *cwd);
 void		add_cwd_to_prompt(t_minishell *cmd);
+void		get_input(t_minishell *mini);
 /* ENV */
 char		**init_env(char **env, int ra);
 char		*get_env(char	*str);

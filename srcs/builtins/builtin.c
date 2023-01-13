@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 22:59:36 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/13 11:59:27 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/13 14:27:46 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	is_local_fd(t_command *cmd)
 
 int	is_dir(t_command *cmd)
 {
-	struct stat sb;
+	struct stat	sb;
 
 	if (stat(cmd->command[0], &sb) == -1)
 		return (0);

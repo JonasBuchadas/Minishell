@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 16:11:18 by jocaetan          #+#    #+#             */
-/*   Updated: 2023/01/13 10:49:41 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/13 14:40:38 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,29 +30,27 @@ int	main(int argc, char **argv, char **envp)
 
 static void	run_ms(void)
 {
+	t_minishell	*mini;
+
+	mini = ms();
 	while (1)
 	{
-		ms()->cwd = getcwd(NULL, 0);
-		ms()->path = ft_relative_path(ms()->cwd);
-		ms()->on_read = 1;
-		add_cwd_to_prompt(ms());
-		ms()->input = readline(ms()->path);
-		ms()->on_read = 0;
-		if (!(ms()->input))
+		get_input(mini);
+		if (!(mini->input))
 			exit(1);
-		if (ms()->input && *ms()->input)
-			add_history(ms()->input);
-		if (ft_strequal(ms()->input, "history -c"))
+		if (mini->input && *mini->input)
+			add_history(mini->input);
+		if (ft_strequal(mini->input, "history -c"))
 			rl_clear_history();
 		else
 			run_input();
-		while (wait(&ms()->status) > 0)
+		while (wait(&mini->status) > 0)
 			;
-		if (WIFEXITED(ms()->status))
-			ms()->status = WEXITSTATUS(ms()->status);
-		ms()->exit = 0;
-		ms()->lstatus = ms()->status;
-		ms()->toplvl = 1;
+		if (WIFEXITED(mini->status))
+			mini->status = WEXITSTATUS(mini->status);
+		mini->exit = 0;
+		mini->lstatus = mini->status;
+		mini->toplvl = 1;
 		clear_data(false);
 	}
 }

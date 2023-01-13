@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 07:52:37 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/12 09:52:00 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/13 14:28:11 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	sg_quit(int sghandler)
 
 void	sg_init(void)
 {
-	int			 	rc;
+	int				rc;
 	struct termios	mytermios;
 
 	rc = tcgetattr(0, &mytermios);
