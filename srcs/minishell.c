@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 16:11:18 by jocaetan          #+#    #+#             */
-/*   Updated: 2023/01/13 15:44:23 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/13 17:17:00 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static void	init_minishell(char **envp)
 
 char	**command_paths(void)
 {
-	int			i;
+	int	i;
 
 	i = -1;
 	while (ms()->envp[++i])
