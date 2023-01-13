@@ -6,7 +6,7 @@ NAME=		minishell
 
 ### COMPILATION ###
 CC=			gcc
-CFLAGS=		-g -fsanitize=address
+CFLAGS=		-Wall -Werror -Wextra -g -fsanitize=address
 
 ### PATHS ###
 LIBFT_PATH=	./libft/
