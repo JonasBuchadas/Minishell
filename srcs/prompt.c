@@ -14,10 +14,16 @@
 
 void    add_cwd_to_prompt(t_minishell *mini)
 {
-	mini->path = ft_strjoin(GREEN, mini->path);
-	mini->path = ft_strjoin(mini->path, YELLOW);
-	mini->path = ft_strjoin(mini->path, " ~ ");
-	mini->path = ft_strjoin(mini->path, RESET);
+	char	*temp;
+
+	temp = ft_strjoin(GREEN, mini->path);
+	ft_strdel(&mini->path);
+	mini->path = ft_strjoin(temp, YELLOW);
+	ft_strdel(&temp);
+	temp = ft_strjoin(mini->path, " ~ ");
+	ft_strdel(&mini->path);
+	mini->path = ft_strjoin(temp, RESET);
+	ft_strdel(&temp);
 }
 
 char    *ft_relative_path(char *cwd)
