@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jocaetan <jocaetan@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 08:45:07 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/02 00:17:00 by jocaetan         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:57:46 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	bt_exit(t_command *cmd)
 			if (!ft_isdigit(cmd->command[1][c]))
 				bt_exit_error("exit: numeric argument required", 2);
 		ec = ft_atoi(cmd->command[1]);
+		if (ec > 255)
+			ec = ec % 256;
 		exit (ec);
 	}
 	else
