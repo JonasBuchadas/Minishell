@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
+/*   By: jocaetan <jocaetan@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 22:59:36 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/12 19:15:05 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/12 23:07:15 by jocaetan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	is_local_fd(t_command *cmd)
 {
-	if (cmd->command[0][0] == '.' && cmd->command[0][1] == '/')
+	if (*cmd->command && cmd->command[0][0] == '.'
+		&& cmd->command[0][1] == '/')
 	{
 		 if (!access(cmd->command[0], F_OK))
 		{
