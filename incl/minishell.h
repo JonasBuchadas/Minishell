@@ -78,7 +78,16 @@ typedef struct s_minishell
 	int				n_pipes;
 	int				*pipes;
 	int				file_input;
+	int				d_in;
+	int				d_out;
+	int				exit;
+	int				toplvl;
+	int				status;
+	int				test_flag;
+	int				lstatus;
 	int				file_output;
+	unsigned int	last_i;
+	bool			on_read;
 	char			*limiter;
 	char			*err_message;
 	char			**cmd_args;
@@ -90,15 +99,6 @@ typedef struct s_minishell
 	char			*input;
 	t_list			*tokens;
 	t_list			*commands;
-	int				d_in;
-	int				d_out;
-	int				exit;
-	unsigned int	last_i;
-	bool			on_read;
-	int				toplvl;
-	int				status;
-	int				lstatus;
-	int				test_flag;
 }			t_minishell;
 
 t_minishell	*ms(void);
