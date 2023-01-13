@@ -6,19 +6,22 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 18:29:02 by tpereira          #+#    #+#             */
-/*   Updated: 2023/01/13 14:41:17 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:28:11 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	get_input(t_minishell *mini)
+void	get_input(t_minishell *mini, char **argv)
 {
 	mini->cwd = getcwd(NULL, 0);
 	mini->path = ft_relative_path(mini->cwd);
 	add_cwd_to_prompt(mini);
 	mini->on_read = 1;
-	mini->input = readline(mini->path);
+	if (ft_strequal(argv[1], "-c") && mini->test_flag-- == 0)
+		mini->input = ft_strdup(argv[2]);
+	else
+		mini->input = readline(mini->path);
 	mini->on_read = 0;
 }
 

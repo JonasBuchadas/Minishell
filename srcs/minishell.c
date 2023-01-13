@@ -6,14 +6,14 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 16:11:18 by jocaetan          #+#    #+#             */
-/*   Updated: 2023/01/13 14:40:38 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:44:23 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static void	init_minishell(char **envp);
-static void	run_ms(void);
+static void	run_ms(char **argv);
 static void	run_input(void);
 
 int	main(int argc, char **argv, char **envp)
@@ -22,20 +22,22 @@ int	main(int argc, char **argv, char **envp)
 	(void) argv;
 	init_minishell(envp);
 	sg_init();
-	run_ms();
+	run_ms(argv);
 	clear_data(true);
 	ft_strarray_clear(&ms()->envp);
 	return (EXIT_SUCCESS);
 }
 
-static void	run_ms(void)
+static void	run_ms(char **argv)
 {
 	t_minishell	*mini;
 
 	mini = ms();
 	while (1)
 	{
-		get_input(mini);
+		if (mini->test_flag < 0)
+			break ;
+		get_input(mini, argv);
 		if (!(mini->input))
 			exit(1);
 		if (mini->input && *mini->input)

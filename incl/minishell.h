@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 10:04:11 by jocaetan          #+#    #+#             */
-/*   Updated: 2023/01/13 14:40:33 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:02:15 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ typedef struct s_minishell
 	int				toplvl;
 	int				status;
 	int				lstatus;
+	int				test_flag;
 }			t_minishell;
 
 t_minishell	*ms(void);
@@ -147,7 +148,7 @@ int			is_dir(t_command *cmd);
 int			is_local_fd(t_command *cmd);
 char		*ft_relative_path(char *cwd);
 void		add_cwd_to_prompt(t_minishell *cmd);
-void		get_input(t_minishell *mini);
+void		get_input(t_minishell *mini, char **argv);
 /* ENV */
 char		**init_env(char **env, int ra);
 char		*get_env(char	*str);
