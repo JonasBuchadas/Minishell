@@ -40,6 +40,7 @@ void	sg_init(void)
 	mytermios.c_cc[VINTR] = CTRL_C;
 	mytermios.c_lflag &= ~ECHOCTL;
 	rc = tcsetattr(0, TCSANOW, &mytermios);
+	(void) rc;
 	signal(SIGINT, &sg_int);
 	signal(SIGQUIT, &sg_quit);
 }
