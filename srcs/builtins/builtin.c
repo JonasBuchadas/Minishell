@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jocaetan <jocaetan@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 22:59:36 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/12 23:07:15 by jocaetan         ###   ########.fr       */
+/*   Updated: 2023/01/13 09:41:34 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	is_local_fd(t_command *cmd)
 		 if (!access(cmd->command[0], F_OK))
 		{
 			if (!access(cmd->command[0], X_OK))
-				open(cmd->command[0], O_RDONLY);
+				ft_execbin(ms()->commands);
 			else
 				perror("Error");
 			return (1);
