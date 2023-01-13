@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 22:59:36 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/13 09:41:34 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/13 11:59:27 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,21 @@
 
 int	is_local_fd(t_command *cmd)
 {
+	char	*err;
+
 	if (*cmd->command && cmd->command[0][0] == '.'
 		&& cmd->command[0][1] == '/')
 	{
-		 if (!access(cmd->command[0], F_OK))
+		if (!access(cmd->command[0], F_OK))
 		{
 			if (!access(cmd->command[0], X_OK))
 				ft_execbin(ms()->commands);
 			else
-				perror("Error");
+			{
+				err = ft_strjoin(cmd->command[0], "");
+				err = ft_strjoin("minishell: ", err);
+				perror(err);
+			}
 			return (1);
 		}
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_handling.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jocaetan <jocaetan@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 15:55:02 by jocaetan          #+#    #+#             */
-/*   Updated: 2023/01/02 00:17:24 by jocaetan         ###   ########.fr       */
+/*   Updated: 2023/01/13 11:53:48 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void	command_errors(char *errname, bool clear, bool stop)
 	char	*prompt_line;
 	char	*full_line;
 
-	prompt_line = ft_strjoin(errname, ": ");
+	prompt_line = ft_strjoin("minishell: ", errname);
+	prompt_line = ft_strjoin(prompt_line, ": ");
 	full_line = ft_strjoin(prompt_line, "command not found");
 	ft_putendl_fd(full_line, 2);
 	ft_strdel(&prompt_line);
