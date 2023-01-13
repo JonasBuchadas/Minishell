@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 05:04:42 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/12 15:28:46 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/13 14:19:33 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ char	**init_env(char **env, int ra)
 	len = -1;
 	while (env[++len])
 		envp[len] = ft_strdup(env[len]);
-	envp[len] = '\0';
+	envp[len] = NULL;
 	if (ra)
-		envp[len + ra] = '\0';
+		envp[len + ra] = NULL;
 	return (envp);
 }
 
