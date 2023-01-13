@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 16:11:18 by jocaetan          #+#    #+#             */
-/*   Updated: 2023/01/12 15:20:32 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/13 10:49:41 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ static void	run_ms(void)
 		ms()->cwd = getcwd(NULL, 0);
 		ms()->path = ft_relative_path(ms()->cwd);
 		ms()->on_read = 1;
-		printf("%s➜%s %s%s%s ", BLUE, RESET, GREEN, ms()->path, RESET);
-		ms()->input = readline(YELLOW "~" RESET " ");
+		add_cwd_to_prompt(ms());
+		ms()->input = readline(ms()->path);
 		ms()->on_read = 0;
 		if (!(ms()->input))
 			exit(1);
