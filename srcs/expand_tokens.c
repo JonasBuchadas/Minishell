@@ -6,7 +6,7 @@
 /*   By: jocaetan <jocaetan@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 16:07:04 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/02 00:17:37 by jocaetan         ###   ########.fr       */
+/*   Updated: 2023/01/16 20:15:30 by jocaetan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ static void	expand_token_text(t_token *token)
 	i = -1;
 	while (token->text[++i])
 	{
+		if (token->empty_exp)
+			break ;
 		if (token->text[i] == '$')
 		{
 			len = 0;
@@ -77,7 +79,7 @@ static void	expand_env(t_token *token, int i, int env_len)
 	if (token->text[start + 1] == '?')
 	{
 		i -= ft_strlen(env) - 3;
-		free(env);
+		ft_strdel(&env);
 	}
 	temp1 = ft_substr(token->text, (unsigned int) i, \
 		(size_t)strlen(token->text) - i);
@@ -97,8 +99,13 @@ static char	*expand_env_var(t_token *token, int i, int len)
 	temp1 = ft_substr(token->text, start, len);
 	if (ft_strequal(temp1, "?") || temp1[0] == '?')
 		env = ft_itoa(ms()->status);
-	else
+	else if (*temp1)
 		env = get_env(temp1);
+	else
+	{
+		env = "$";
+		token->empty_exp = true;
+	}
 	ft_strdel(&temp1);
 	return (env);
 }

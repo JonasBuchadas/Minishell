@@ -6,7 +6,7 @@
 /*   By: jocaetan <jocaetan@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 15:35:16 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/02 00:17:19 by jocaetan         ###   ########.fr       */
+/*   Updated: 2023/01/16 19:56:58 by jocaetan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ static void	add_token(unsigned int start, int len, int parse_code)
 	token = protected_calloc(1, sizeof(t_token));
 	token->parse_code = parse_code;
 	token->text = text;
+	token->empty_exp = false;
 	if (!ms()->tokens)
 		ms()->tokens = ft_lstnew((void *)token);
 	else
