@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 22:59:36 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/16 12:54:52 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/16 17:09:53 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,19 @@
 
 int	is_local_fd(t_command *cmd)
 {
-	char	*err;
-
 	if (*cmd->command && cmd->command[0][0] == '.'
 		&& cmd->command[0][1] == '/')
 	{
 		if (!access(cmd->command[0], F_OK))
 		{
 			if (!access(cmd->command[0], X_OK))
-				ft_execbin(ms()->commands);
+				return (0);
 			else
-			{
-				err = ft_strjoin("minishell: ", cmd->command[0]);
-				perror(err);
-				free(err);
-			}
+				error_codes(cmd, 126);
 		}
 		else
 		{
+			ms()->status = 127;
 			ft_putstr_fd("minishell: ", 2);
 			ft_putstr_fd(cmd->command[0], 2);
 			ft_putendl_fd(": No such file or directory", 2);

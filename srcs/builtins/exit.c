@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 08:45:07 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/13 15:57:46 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/16 18:47:15 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	bt_exit_error(char *str, int ex)
 
 int	bt_exit(t_command *cmd)
 {
-	int	ec;
-	int	c;
+	long	ec;
+	int		c;
 
 	c = 0;
 	if (cmd->command[1] && cmd->command[2])
@@ -34,10 +34,11 @@ int	bt_exit(t_command *cmd)
 		c = -1;
 		while (cmd->command[1][++c])
 			if (!ft_isdigit(cmd->command[1][c]))
-				bt_exit_error("exit: numeric argument required", 2);
+				bt_exit_error("exit: numeric argument required", 128);
 		ec = ft_atoi(cmd->command[1]);
 		if (ec > 255)
 			ec = ec % 256;
+		ms()->status = ec;
 		exit (ec);
 	}
 	else
