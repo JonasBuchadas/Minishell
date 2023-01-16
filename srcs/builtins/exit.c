@@ -6,7 +6,7 @@
 /*   By: jocaetan <jocaetan@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 08:45:07 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/16 22:51:41 by jocaetan         ###   ########.fr       */
+/*   Updated: 2023/01/16 23:49:30 by jocaetan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	bt_exit(t_command *cmd)
 				bt_exit_error("exit: numeric argument required", 2);
 		if (ec > 255)
 			ec = ec % 256;
+		ms()->status = ec;
 		exit (ec);
 	}
 	else

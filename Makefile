@@ -40,7 +40,8 @@ SRCS=		structs.c \
 			builtins/env.c \
 			builtins/export.c \
 			builtins/unset.c \
-			builtins/exit.c
+			builtins/exit.c \
+			error_handling_utils.c
 SRCS_NAME=	$(addprefix $(SRCS_PATH), $(SRC_NAME) $(SRCS))
 SRCS_BONUS=	$(addprefix $(SRCS_PATH), $(SRC_BONUS) $(SRCS))
 
