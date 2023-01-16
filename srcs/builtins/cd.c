@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 23:49:19 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/12 09:12:29 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/16 12:53:14 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	bt_cd_error(char **cmd)
 	else
 		error = ft_strdup("HOME is not set\n");
 	ft_putstr_fd("minishell: cd: ", 2);
+	ft_putstr_fd(cmd[1], 2);
+	ft_putstr_fd(": ", 2);
 	ft_putstr_fd(error, 2);
 	if (cmd[1] && !ft_strequal(cmd[1], "-"))
 		write(2, "\n", 1);
