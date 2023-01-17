@@ -15,6 +15,8 @@
 void	get_input(t_minishell *mini, char **argv)
 {
 	mini->cwd = getcwd(NULL, 0);
+	if (!mini->cwd)
+		mini->cwd = ft_strdup(get_env("PWD"));
 	mini->path = ft_relative_path(mini->cwd);
 	add_cwd_to_prompt(mini);
 	mini->on_read = 1;
