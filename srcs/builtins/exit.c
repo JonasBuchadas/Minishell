@@ -6,7 +6,7 @@
 /*   By: jocaetan <jocaetan@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 08:45:07 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/16 23:49:30 by jocaetan         ###   ########.fr       */
+/*   Updated: 2023/01/17 23:04:10 by jocaetan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	bt_exit(t_command *cmd)
 	long	ec;
 	int		c;
 
+	c = -1;
 	if (cmd->command[1] && cmd->command[2])
 		return (bt_exit_error("exit: too many arguments", -1));
 	if (cmd->command[1])
@@ -34,8 +35,6 @@ int	bt_exit(t_command *cmd)
 		ec = ft_atol(cmd->command[1]);
 		if (ec < 0)
 			c = 0;
-		else
-			c = -1;
 		while (cmd->command[1][++c])
 			if (!ft_isdigit(cmd->command[1][c])
 				|| (ec == 0 && !ft_strequal(cmd->command[1], "0")))

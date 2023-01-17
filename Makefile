@@ -123,8 +123,10 @@ re: fclean all ## recompiles minishell
 ### NORMINETTE ###
 norm: ## checks norminette requirements
 	@norminette -R CheckForbiddenSourceHeader $(SRCS_PATH)
+	@norminette -R CheckForbiddenSourceHeader $(LIBFT_PATH)
 	@norminette -R CheckForbiddenSourceHeader $(INCL_PATH)
 	@norminette -R CheckDefine $(SRCS_PATH)
+	@norminette -R CheckDefine $(LIBFT_PATH)
 	@norminette -R CheckDefine $(INCL_PATH)
 
 ### PHONY RULE ###
