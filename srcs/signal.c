@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 07:52:37 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/16 16:13:11 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/18 15:09:07 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	sg_int(int sghandler)
 	ms()->lstatus = EXIT_SIGINT;
 	if (ms()->on_read)
 		ms()->lstatus = EXIT_SIGINT;
-	write(2, "\n", 1);
+	write(2, "^C\n", 3);
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	if (ms()->on_read)
@@ -34,14 +34,6 @@ void	sg_quit(int sghandler)
 
 void	sg_init(void)
 {
-	int				rc;
-	struct termios	mytermios;
-
-	rc = tcgetattr(0, &mytermios);
-	mytermios.c_cc[VINTR] = CTRL_C;
-	mytermios.c_lflag &= ~ECHOCTL;
-	rc = tcsetattr(0, TCSANOW, &mytermios);
-	(void) rc;
 	signal(SIGINT, &sg_int);
 	signal(SIGQUIT, &sg_quit);
 }
