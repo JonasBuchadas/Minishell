@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 00:16:35 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/18 16:58:19 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:37:14 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	bt_add_export(t_command *cmd, int i)
 
 void	bt_export(t_command *cmd)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!cmd->command[1])

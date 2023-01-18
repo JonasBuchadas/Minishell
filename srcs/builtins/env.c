@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 01:32:13 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/18 17:19:07 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:37:22 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	bt_env(void)
 {
 	int	c;
-	int i;
+	int	i;
 
 	c = -1;
 	while (ms()->envp[++c])

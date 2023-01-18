@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jocaetan <jocaetan@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 08:26:40 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/02 00:17:09 by jocaetan         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:37:54 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,35 @@ void	bt_swap_envp(char *t)
 	ms()->envp[len - 1] = NULL;
 }
 
-int	bt_unset(t_command *cmd)
+void	bt_remove_unset(t_command *cmd, int i)
 {
 	char	*t;
 	size_t	len;
 	char	*f;
 
-	len = ft_strlen(cmd->command[1]);
-	if (cmd->command[1][len - 1] != '=')
-		t = ft_strjoin(cmd->command[1], "=");
+	if (cmd->command[i])
+	{
+		len = ft_strlen(cmd->command[i]);
+		printf("len= %zu\n", len);
+		if (cmd->command[i][len - 1] != '=')
+			t = ft_strjoin(cmd->command[i], "=");
+		else
+			t = ft_strdup(cmd->command[i]);
+		f = get_env(t);
+		if (f)
+			bt_swap_envp(t);
+		free(t);
+	}
+}
+
+void	bt_unset(t_command *cmd)
+{
+	int	i;
+
+	i = 0;
+	if (!cmd->command[1])
+		printf("unset: not enough arguments\n");
 	else
-		t = ft_strdup(cmd->command[1]);
-	f = get_env(t);
-	if (f)
-		bt_swap_envp(t);
-	free(t);
-	if (f)
-		return (0);
-	else
-		return (1);
+		while (cmd->command[i++])
+			bt_remove_unset(cmd, i);
 }

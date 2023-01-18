@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/28 10:04:11 by jocaetan          #+#    #+#             */
-/*   Updated: 2023/01/18 15:58:05 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:24:45 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ int			bt_cd(t_command	*cmd);
 int			bt_pwd(void);
 void		bt_env(void);
 void		bt_export(t_command *cmd);
-int			bt_unset(t_command *cmd);
+void		bt_unset(t_command *cmd);
 int			bt_exit(t_command *cmd);
 /* AUX */
 int			ft_strcmp(const char *s1, const char *s2);
