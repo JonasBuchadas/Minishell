@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 05:04:42 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/13 14:19:33 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/18 16:55:33 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	set_env(char *env, char *value)
 	}
 	if (!f)
 	{
-		temp = ms()->envp;
+		temp = mini->envp;
 		mini->envp = init_env(mini->envp, 1);
 		ft_strarray_clear(&temp);
 		mini->envp[c] = ft_strjoin(env, value);

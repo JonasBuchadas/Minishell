@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 00:16:35 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/16 12:40:45 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/18 16:58:19 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,38 +62,49 @@ void	bt_export_print(void)
 		ft_putstr_fd("declare -x ", 1);
 		name = get_env_name(list[c]);
 		ft_putstr_fd(name, 1);
-		write(1, "=\"", 2);
-		ft_putstr_fd(get_env(name), 1),
-		write(1, "\"\n", 2);
+		if (get_env(name)[0])
+		{
+			write(1, "=\"", 2);
+			ft_putstr_fd(get_env(name), 1);
+			write(1, "\"", 1);
+		}
+		write(1, "\n", 1);
 		free(name);
 		c++;
 	}
 	ft_strarray_clear(&list);
 }
 
-void	bt_add_export(t_command *cmd)
+void	bt_add_export(t_command *cmd, int i)
 {
 	char	*name;
 	char	*temp;
 
-	if (!ft_strchr(cmd->command[1], '='))
-		name = ft_strdup(cmd->command[1]);
-	else
-		name = get_env_name(cmd->command[1]);
-	if (name[ft_strlen(name) - 1] != '=')
+	if (cmd->command[i])
 	{
-		temp = name;
-		name = ft_strjoin(name, "=");
-		free(temp);
+		if (!ft_strchr(cmd->command[i], '='))
+			name = ft_strdup(cmd->command[i]);
+		else
+			name = get_env_name(cmd->command[i]);
+		if (name[ft_strlen(name) - 1] != '=')
+		{
+			temp = name;
+			name = ft_strjoin(name, "=");
+			free(temp);
+		}
+		set_env(name, &cmd->command[i][ft_strlen(name)]);
+		free(name);
 	}
-	set_env(name, &cmd->command[1][ft_strlen(name)]);
-	free(name);
 }
 
 void	bt_export(t_command *cmd)
 {
-	if (cmd->command[1])
-		bt_add_export(cmd);
-	else
+	int i;
+
+	i = 0;
+	if (!cmd->command[1])
 		bt_export_print();
+	else
+		while (cmd->command[i++])
+			bt_add_export(cmd, i);
 }
