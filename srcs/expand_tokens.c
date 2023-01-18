@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 16:07:04 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/18 15:51:14 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/18 18:13:48 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,26 +67,30 @@ static void	expand_env(t_token *token, int i, int env_len)
 	char			*temp1;
 	char			*temp2;
 	char			*env;
+	int				f;
 
+	f = 0;
 	env = expand_env_var(token, i, env_len);
 	if (!env)
+	{
 		env = (char *)protected_calloc(1, 1);
+		f = 1;
+	}
 	start = (unsigned int)i++;
 	temp1 = ft_substr(token->text, 0, start);
 	temp2 = ft_strjoin(temp1, env);
 	ft_strdel(&temp1);
 	i += env_len;
 	if (token->text[start + 1] == '?')
-	{
 		i -= ft_strlen(env) - 3;
-		ft_strdel(&env);
-	}
 	temp1 = ft_substr(token->text, (unsigned int) i, \
 		(size_t)strlen(token->text) - i);
 	ft_strdel(&token->text);
 	token->text = ft_strjoin(temp2, temp1);
 	ft_strdel(&temp1);
 	ft_strdel(&temp2);
+	if (f)
+		ft_strdel(&env);
 }
 
 static char	*expand_env_var(t_token *token, int i, int len)
