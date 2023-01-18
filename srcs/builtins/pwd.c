@@ -14,11 +14,11 @@
 
 int	bt_pwd(void)
 {
-	char	cwd[PATH_MAX];
+//	char	cwd[PATH_MAX];
 
-	if (getcwd(cwd, PATH_MAX))
+	if (ms()->cwd)
 	{
-		ft_putstr_fd(cwd, 1);
+		ft_putstr_fd(ms()->cwd, 1);
 		write(1, "\n", 1);
 		return (EXIT_SUCCESS);
 	}

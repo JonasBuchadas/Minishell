@@ -68,14 +68,14 @@ static void	expand_env(t_token *token, int i, int env_len)
 	char			*temp1;
 	char			*temp2;
 	char			*env;
-	int				f;
+//	int				f;
 
-	f = 0;
+//	f = 0;
 	env = expand_env_var(token, i, env_len);
 	if (!env)
 	{
 		env = (char *)protected_calloc(1, 1);
-		f = 1;
+//		f = 1;
 	}
 	start = (unsigned int)i++;
 	temp1 = ft_substr(token->text, 0, start);
@@ -90,8 +90,8 @@ static void	expand_env(t_token *token, int i, int env_len)
 	token->text = ft_strjoin(temp2, temp1);
 	ft_strdel(&temp1);
 	ft_strdel(&temp2);
-	if (f)
-		ft_strdel(&env);
+	//if (f)
+	ft_strdel(&env);
 }
 
 static char	*expand_env_var(t_token *token, int i, int len)
@@ -105,7 +105,7 @@ static char	*expand_env_var(t_token *token, int i, int len)
 	if (ft_strequal(temp1, "?") || temp1[0] == '?')
 		env = ft_itoa(ms()->status);
 	else if (*temp1)
-		env = get_env(temp1);
+		env = ft_strdup(get_env(temp1));
 	else
 	{
 		env = "$";
