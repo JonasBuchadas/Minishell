@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jocaetan <jocaetan@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 16:07:04 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/16 20:15:30 by jocaetan         ###   ########.fr       */
+/*   Updated: 2023/01/18 15:01:49 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ static void	expand_env(t_token *token, int i, int env_len)
 	token->text = ft_strjoin(temp2, temp1);
 	ft_strdel(&temp1);
 	ft_strdel(&temp2);
+	free(env);
 }
 
 static char	*expand_env_var(t_token *token, int i, int len)
