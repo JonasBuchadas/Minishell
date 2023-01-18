@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 16:07:04 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/18 19:29:41 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/18 19:50:50 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,28 +34,27 @@ void	*expand_token(void *elem)
 
 static void	expand_token_text(t_token *token)
 {
-	int		i;
-	int		j;
+	int		i[2];
 	int		len;
 
-	i = -1;
-	while (token->text[++i])
+	i[0] = -1;
+	while (token->text[++i[0]])
 	{
 		if (token->empty_exp)
 			break ;
-		if (token->text[i] == '$')
+		if (token->text[i[0]] == '$')
 		{
 			len = 0;
-			j = i;
-			while (token->text[++j] && token->text[j] != ' '
-				&& token->text[j] != '$' && token->text[j] != '='
-				&& token->text[j] != ':' && token->text[j] != '/')
+			i[1] = i[0];
+			while (token->text[++i[1]] && token->text[i[1]] != ' '
+				&& token->text[i[1]] != '$' && token->text[i[1]] != '='
+				&& token->text[i[1]] != ':' && token->text[i[1]] != '/')
 				len++;
-			if (token->text[i + 1] == '?')
-				expand_env(token, i, 1);
+			if (token->text[i[0] + 1] == '?')
+				expand_env(token, i[0], 1);
 			else
-				expand_env(token, i, len);
-			i--;
+				expand_env(token, i[0], len);
+			i[0]--;
 			if (!token->text[0])
 				break ;
 		}
@@ -68,15 +67,10 @@ static void	expand_env(t_token *token, int i, int env_len)
 	char			*temp1;
 	char			*temp2;
 	char			*env;
-//	int				f;
 
-//	f = 0;
 	env = expand_env_var(token, i, env_len);
 	if (!env)
-	{
 		env = (char *)protected_calloc(1, 1);
-//		f = 1;
-	}
 	start = (unsigned int)i++;
 	temp1 = ft_substr(token->text, 0, start);
 	temp2 = ft_strjoin(temp1, env);
@@ -90,7 +84,6 @@ static void	expand_env(t_token *token, int i, int env_len)
 	token->text = ft_strjoin(temp2, temp1);
 	ft_strdel(&temp1);
 	ft_strdel(&temp2);
-	//if (f)
 	ft_strdel(&env);
 }
 

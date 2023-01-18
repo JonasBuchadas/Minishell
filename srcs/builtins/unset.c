@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/14 08:26:40 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/18 18:51:28 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/18 19:50:59 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	bt_remove_unset(t_command *cmd, int i)
 			bt_swap_envp(t);
 		free(t);
 	}
-
 }
 
 void	bt_unset(t_command *cmd)
