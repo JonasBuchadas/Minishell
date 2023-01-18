@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jocaetan <jocaetan@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 16:08:34 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/02 00:17:41 by jocaetan         ###   ########.fr       */
+/*   Updated: 2023/01/18 19:54:30 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ int	here_doc(char *limiter)
 	file = open(".inputstream.txt", O_WRONLY | O_CREAT, 0644);
 	if (file == ERROR)
 		file_error("NO FILE", ".inputstream.txt", false);
+	if (ms()->limiter)
+		ft_strdel(&ms()->limiter);
 	ms()->limiter = ft_strdup(limiter);
 	init_here_doc(file);
 	close(file);
