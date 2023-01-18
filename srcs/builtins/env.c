@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jocaetan <jocaetan@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 01:32:13 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/02 00:16:55 by jocaetan         ###   ########.fr       */
+/*   Updated: 2023/01/18 17:19:07 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,18 @@
 void	bt_env(void)
 {
 	int	c;
+	int i;
 
 	c = -1;
 	while (ms()->envp[++c])
 	{
-		ft_putstr_fd(ms()->envp[c], 1);
-		write(1, "\n", 1);
+		i = 0;
+		while (ms()->envp[c][i] && ms()->envp[c][i] != '=')
+			i++;
+		if (ms()->envp[c][++i] != '\0')
+		{
+			ft_putstr_fd(ms()->envp[c], 1);
+			write(1, "\n", 1);
+		}
 	}
 }
