@@ -6,7 +6,7 @@
 /*   By: tpereira <tpereira@42Lisboa.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/24 16:07:04 by fvarela           #+#    #+#             */
-/*   Updated: 2023/01/18 18:13:48 by tpereira         ###   ########.fr       */
+/*   Updated: 2023/01/18 19:29:41 by tpereira         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ static void	expand_token_text(t_token *token)
 			len = 0;
 			j = i;
 			while (token->text[++j] && token->text[j] != ' '
-				&& token->text[j] != '$' && token->text[j] != '=')
+				&& token->text[j] != '$' && token->text[j] != '='
+				&& token->text[j] != ':' && token->text[j] != '/')
 				len++;
 			if (token->text[i + 1] == '?')
 				expand_env(token, i, 1);
